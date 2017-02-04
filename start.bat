@@ -1,0 +1,1 @@
+pm2 start botPrototype.js -f --name lillie
