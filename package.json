@@ -1,0 +1,32 @@
+{
+	"name":"lillie",
+	"version":"1.0.0",
+	"description":"",
+	"homepage":"",
+	"author":"",
+	"files":[
+		"node_modules"
+	],
+	"main":"botPrototype.js",
+	"keywords":[
+	],
+	"scripts":{
+		"bot":"node ./botPrototype.js"
+	},
+	"devDependencies":{
+	},
+	"repository":{
+		"type":"git",
+		"url":""
+	},
+	"license":"Apache-2.0",
+	"dependencies":{
+		"discord.js":"^10.0.1"
+	},
+	"bugs":{
+		"url":""
+	},
+	"engines":{
+		"node": "6.9.2"
+	}
+}
