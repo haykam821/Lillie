@@ -76,6 +76,7 @@ bot.on("message", msg => {
     }
   }
   if (msg.mentions.users.first()){
+    if (!msg.author.bot){
     if (banned[msg.mentions.users.first().id]){
       if (banned[msg.mentions.users.first().id].permban){
         let worked = 1;
@@ -86,6 +87,7 @@ bot.on("message", msg => {
           if (worked) msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!")});
         }
       }
+    }
     }
   }
   if (msg.channel.type == 'dm' && !msg.author.bot && msg.author.id != "197592250354499584"){
