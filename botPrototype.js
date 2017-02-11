@@ -78,11 +78,12 @@ bot.on("message", msg => {
   if (msg.mentions.users.first()){
     if (banned[msg.mentions.users.first().id]){
       if (banned[msg.mentions.users.first().id].permban){
+        let worked = 1;
         if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
           msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
         }else{
-          bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id).kick().catch(function(err){console.log(err); msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!"); return;});
-          msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
+          bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id).kick().catch(function(err){console.log(err); msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!"); worked = 0;});
+          if (worked) msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
         }
       }
     }
