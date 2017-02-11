@@ -55,10 +55,10 @@ bot.on("guildCreate", guild => {
 bot.on("guildMemberAdd", (member) => {
   if (banned[member.id]){
     if (banned[member.id].permban){
-      bot.guilds.get(member.guild.id).members.get(member.id).kick();
+      bot.guilds.get(member.guild.id).members.get(member.id).kick().catch(function(err){console.log(err);});
     }
   }
-  bot.user.fetchProfile(member.id);
+  bot.user.fetchProfile(member.id).catch(function(err){console.log(err);});
   bot.users.get(member.id).sendMessage("Welcome!");
 });
 
@@ -71,7 +71,7 @@ bot.on("message", msg => {
         msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.author.id) + " (" + msg.author.id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
       }else{
         msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.author.id) + " (" + msg.author.id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
-        bot.guilds.get(msg.guild.id).members.get(msg.author.id).kick();
+        bot.guilds.get(msg.guild.id).members.get(msg.author.id).kick().catch(function(err){console.log(err);});
       }
     }
   }
@@ -82,7 +82,7 @@ bot.on("message", msg => {
           msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
         }else{
           msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
-          bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id).kick();
+          bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id).kick().catch(function(err){console.log(err);});
         }
       }
     }
@@ -777,7 +777,7 @@ bot.on("message", msg => {
           msg.channel.sendMessage(bot.guilds.get(serverid).members.get(targetUser.toString()) + " (" + targetUser + ")" + " cannot be kicked from " + servername + " (" + serverid + ")!");
           continue;
         }
-        bot.guilds.get(serverid).members.get(targetUser.toString()).kick();
+        bot.guilds.get(serverid).members.get(targetUser.toString()).kick().catch(function(err){console.log(err);});
         msg.channel.sendMessage(bot.guilds.get(serverid).members.get(targetUser.toString()) + " (" + targetUser + ")" + " has been kicked from " + servername + " (" + serverid + ")!");
       }
     }
@@ -1463,8 +1463,11 @@ bot.on("message", msg => {
       return;
     }
     if (!args[0]){
-      msg.channel.sendMessage("`Usage: [p]globalkick [userID]`");
+      msg.channel.sendMessage("`Usage: [p]globalkick [userID or @mention]`");
       return;
+    }
+    if (msg.mentions.users.first()){
+      args[0] = msg.mentions.users.first().id;
     }
     bot.user.fetchProfile(args[0]);
     let targetUser = args[0];
@@ -1494,7 +1497,7 @@ bot.on("message", msg => {
           msg.channel.sendMessage(bot.guilds.get(serverid).members.get(targetUser.toString()) + " (" + targetUser + ")" + " cannot be kicked from " + servername + " (" + serverid + ")!");
           continue;
         }
-        bot.guilds.get(serverid).members.get(targetUser.toString()).kick();
+        bot.guilds.get(serverid).members.get(targetUser.toString()).kick().catch(function(err){console.log(err);});
         msg.channel.sendMessage(bot.guilds.get(serverid).members.get(targetUser.toString()) + " (" + targetUser + ")" + " has been kicked from " + servername + " (" + serverid + ")!");
       }
     }
@@ -1567,7 +1570,7 @@ bot.on("message", msg => {
   "[p]latency [enable/disable]: Sets whether latency appears after each command.\n"+
   "[p]addptsmod [@mention]: Allows user to access bot mod commands.\n"+
   "[p]delptsmod [@mention]: Prohibits user from accessing bot mod commands.\n"+
-  "[p]globalkick [userid]: Kicks user out of all servers running this bot.\n").then((sent1) => {
+  "[p]globalkick [userid or @mention]: Kicks user out of all servers running this bot.\n").then((sent1) => {
     bot.users.get(msg.author.id).sendMessage("**Bot Mod Only:**\n"+
   "[p]ptsadd [number] [@mention]: Adds points to user.\n"+
   "[p]questsadd [number] [@mention]: Adds quests to user.\n"+
@@ -1620,7 +1623,7 @@ bot.on("message", msg => {
 "[p]latency [enable/disable]: Sets whether latency appears after each command.\n"+
 "[p]addptsmod [@mention]: Allows user to access bot mod commands.\n"+
 "[p]delptsmod [@mention]: Prohibits user from accessing bot mod commands.\n"+
-"[p]globalkick [userid]: Kicks user out of all servers running this bot.\n").then((sent1) => {
+"[p]globalkick [userid or @mention]: Kicks user out of all servers running this bot.\n").then((sent1) => {
   msg.channel.sendMessage("**Bot Mod Only:**\n"+
 "[p]ptsadd [number] [@mention]: Adds points to user.\n"+
 "[p]questsadd [number] [@mention]: Adds quests to user.\n"+
