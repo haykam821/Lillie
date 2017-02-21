@@ -65,12 +65,12 @@ bot.on("guildMemberAdd", (member) => {
 let bagCounter = 0;
 
 bot.on("message", msg => {
-  if (msg.invites.first()){
+/*  if (msg.invites.first()){
     if (msg.invites.first().id == "252525368865456130"){
       msg.delete();
       msg.reply("invites to SK are forbidden!");
     }
-  }
+  }*/
   if (banned[msg.author.id]){
     if (banned[msg.author.id].permban){
       if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
