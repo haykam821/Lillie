@@ -32,7 +32,7 @@ let pointRoles = JSON.parse(fs.readFileSync('./pointRoles.json', 'utf8'));
 let questRoles = JSON.parse(fs.readFileSync('./questRoles.json', 'utf8'));
 let civilWarRoles = JSON.parse(fs.readFileSync('./civilWarRoles.json', 'utf8'));
 
-/*function detectSKInvite(x) {
+function detectSKInvite(x) {
   var detected = false;
   x.split(" ").forEach((block)=>{
     var invite = bot.fetchInvite(block);
@@ -57,7 +57,7 @@ async function deleteSKInvites(message){
     return true;
   }
   return false;
-}*/
+}
 function resolveAfter2Seconds(x) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -106,7 +106,7 @@ bot.on("guildMemberAdd", (member) => {
 let bagCounter = 0;
 
 bot.on("message", msg => {
-  msg.content.split(" ").forEach((block)=>{if (bot.fetchInvite(block)){msg.delete(); msg.reply("Invites to SK are forbidden!");}});
+
   if (banned[msg.author.id]){
     if (banned[msg.author.id].permban){
       if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
