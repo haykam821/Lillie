@@ -92,7 +92,7 @@ bot.on("guildMemberAdd", (member) => {
 let bagCounter = 0;
 
 bot.on("message", msg => {
-  if (!msg.author.bot){
+  /*if (!msg.author.bot){
     var detected = false;
     var blockArray = msg.content.split(" ");
     blockArray.forEach((block)=>{
@@ -106,7 +106,7 @@ bot.on("message", msg => {
     }
   });
   //deleteSKInvites(msg).catch((err)=>{console.log(err);}); 
-  }
+  }*/
   if (banned[msg.author.id]){
     if (banned[msg.author.id].permban){
       if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
