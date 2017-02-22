@@ -94,7 +94,7 @@ let bagCounter = 0;
 bot.on("message", msg => {
   if (!msg.author.bot){
     msg.content.split(" ").forEach((block)=>{
-    if (bot.fetchInvite(block)){
+    if (bot.fetchInvite(block).length > 0){
       if (bot.fetchInvite(block).guild.id == "252525368865456130"){
         msg.delete();
         msg.reply("Invites to SK are forbidden!");
