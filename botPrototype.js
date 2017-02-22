@@ -96,8 +96,9 @@ bot.on("message", msg => {
     msg.content.split(" ").forEach((block)=>{
     if (bot.fetchInvite(block).length > 0){
       if (bot.fetchInvite(block).guild.id == "252525368865456130"){
-        msg.delete();
-        msg.reply("Invites to SK are forbidden!");
+        msg.reply("Invites to SK are forbidden!").then(()=>{
+          msg.delete();
+        });
       }
     }
   });
