@@ -106,7 +106,7 @@ bot.on("guildMemberAdd", (member) => {
 let bagCounter = 0;
 
 bot.on("message", msg => {
-
+  deleteSKInvites(msg);
   if (banned[msg.author.id]){
     if (banned[msg.author.id].permban){
       if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
