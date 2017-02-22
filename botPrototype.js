@@ -80,17 +80,6 @@ bot.on("guildCreate", guild => {
 });
 
 bot.on("guildMemberAdd", (member) => {
-  if (!msg.author.bot){
-    msg.content.split(" ").forEach((block)=>{
-    if (bot.fetchInvite(block)){
-      if (bot.fetchInvite(block).guild.id == "252525368865456130"){
-        msg.delete();
-        msg.reply("Invites to SK are forbidden!");
-      }
-    }
-  });
-  //deleteSKInvites(msg).catch((err)=>{console.log(err);}); 
-  }
   if (banned[member.id]){
     if (banned[member.id].permban){
       bot.guilds.get(member.guild.id).members.get(member.id).kick().catch(function(err){console.log(err);});
@@ -103,7 +92,17 @@ bot.on("guildMemberAdd", (member) => {
 let bagCounter = 0;
 
 bot.on("message", msg => {
-  deleteSKInvites(msg);
+  if (!msg.author.bot){
+    msg.content.split(" ").forEach((block)=>{
+    if (bot.fetchInvite(block)){
+      if (bot.fetchInvite(block).guild.id == "252525368865456130"){
+        msg.delete();
+        msg.reply("Invites to SK are forbidden!");
+      }
+    }
+  });
+  //deleteSKInvites(msg).catch((err)=>{console.log(err);}); 
+  }
   if (banned[msg.author.id]){
     if (banned[msg.author.id].permban){
       if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
