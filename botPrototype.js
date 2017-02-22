@@ -32,6 +32,33 @@ let pointRoles = JSON.parse(fs.readFileSync('./pointRoles.json', 'utf8'));
 let questRoles = JSON.parse(fs.readFileSync('./questRoles.json', 'utf8'));
 let civilWarRoles = JSON.parse(fs.readFileSync('./civilWarRoles.json', 'utf8'));
 
+function detectSKInvite(x) {
+  var detected = false;
+  x.split(" ").forEach((block)=>{
+    var invite = bot.fetchInvite(block);
+    if (invite){
+      if (invite.guild.id == "252525368865456130"){
+        detected = true;
+      }
+    }
+  });
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(detected);
+    }, 10);
+  });
+}
+
+async function deleteSKInvites(message){
+  var hasSKInvite = await detectSKInvite(message.content);
+  if (hasSKInvite){
+    msg.delete();
+    msg.reply("Invites to SK are forbidden!");
+    return true;
+  }
+  return false;
+}
+
 bot.on('ready', () => {
   console.log('I am ready!');
   bot.user.setStatus('online');
@@ -53,6 +80,7 @@ bot.on("guildCreate", guild => {
 });
 
 bot.on("guildMemberAdd", (member) => {
+  deleteSKInvites(msg);
   if (banned[member.id]){
     if (banned[member.id].permban){
       bot.guilds.get(member.guild.id).members.get(member.id).kick().catch(function(err){console.log(err);});
@@ -65,12 +93,7 @@ bot.on("guildMemberAdd", (member) => {
 let bagCounter = 0;
 
 bot.on("message", msg => {
-/*  if (msg.invites.first()){
-    if (msg.invites.first().id == "252525368865456130"){
-      msg.delete();
-      msg.reply("invites to SK are forbidden!");
-    }
-  }*/
+  msg.content.split(" ").forEach((block)=>{if (bot.fetchInvite(block)){msg.delete(); msg.reply("Invites to SK are forbidden!");}});
   if (banned[msg.author.id]){
     if (banned[msg.author.id].permban){
       if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
