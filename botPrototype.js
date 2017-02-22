@@ -35,9 +35,8 @@ let civilWarRoles = JSON.parse(fs.readFileSync('./civilWarRoles.json', 'utf8'));
 function detectSKInvite(x) {
   var detected = false;
   x.split(" ").forEach((block)=>{
-    var invite = bot.fetchInvite(block);
-    if (invite){
-      if (invite.guild.id == "252525368865456130"){
+    if (bot.fetchInvite(block)){
+      if (bot.fetchInvite(block).guild.id == "252525368865456130"){
         detected = true;
       }
     }
