@@ -32,7 +32,7 @@ let pointRoles = JSON.parse(fs.readFileSync('./pointRoles.json', 'utf8'));
 let questRoles = JSON.parse(fs.readFileSync('./questRoles.json', 'utf8'));
 let civilWarRoles = JSON.parse(fs.readFileSync('./civilWarRoles.json', 'utf8'));
 
-function detectSKInvite(x) {
+/*function detectSKInvite(x) {
   var detected = false;
   x.split(" ").forEach((block)=>{
     var invite = bot.fetchInvite(block);
@@ -57,6 +57,19 @@ async function deleteSKInvites(message){
     return true;
   }
   return false;
+}*/
+function resolveAfter2Seconds(x) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(x);
+    }, 2000);
+  });
+}
+
+async function add1(x) {
+  var a = resolveAfter2Seconds(20);
+  var b = resolveAfter2Seconds(30);
+  return x + await a + await b;
 }
 
 bot.on('ready', () => {
