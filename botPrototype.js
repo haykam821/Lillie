@@ -94,11 +94,12 @@ let bagCounter = 0;
 bot.on("message", msg => {
   if (!msg.author.bot){
     var detected = false;
-    msg.content.split(" ").forEach((block)=>{
-    if (bot.fetchInvite(block).length > 0 && detected == false){
+    var blockArray = msg.content.split(" ");
+    blockArray.forEach((block)=>{
+    if (detected == false && bot.fetchInvite(block).length > 0){
       if (bot.fetchInvite(block).guild.id == "252525368865456130"){
         detected = true;
-        msg.reply("Invites to SK are forbidden!").then(()=>{
+        msg.channel.sendMessage("Invites to SK are forbidden!").then(()=>{
           msg.delete();
         });
       }
