@@ -31,7 +31,7 @@ let custmsgs = JSON.parse(fs.readFileSync('./custmsgs.json', 'utf8'));
 let pointRoles = JSON.parse(fs.readFileSync('./pointRoles.json', 'utf8'));
 let questRoles = JSON.parse(fs.readFileSync('./questRoles.json', 'utf8'));
 let civilWarRoles = JSON.parse(fs.readFileSync('./civilWarRoles.json', 'utf8'));
-
+/*
 function detectSKInvite(x) {
   var detected = false;
   x.split(" ").forEach((block)=>{
@@ -57,19 +57,7 @@ async function deleteSKInvites(message){
   }
   return false;
 }
-function resolveAfter2Seconds(x) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(x);
-    }, 2000);
-  });
-}
-
-async function add1(x) {
-  var a = resolveAfter2Seconds(20);
-  var b = resolveAfter2Seconds(30);
-  return x + await a + await b;
-}
+*/
 
 bot.on('ready', () => {
   console.log('I am ready!');
@@ -92,8 +80,17 @@ bot.on("guildCreate", guild => {
 });
 
 bot.on("guildMemberAdd", (member) => {
-  if (!msg.author.bot)
-  deleteSKInvites(msg).catch((err)=>{console.log(err);});
+  if (!msg.author.bot){
+    msg.content.split(" ").forEach((block)=>{
+    if (bot.fetchInvite(block)){
+      if (bot.fetchInvite(block).guild.id == "252525368865456130"){
+        msg.delete();
+        msg.reply("Invites to SK are forbidden!");
+      }
+    }
+  });
+  //deleteSKInvites(msg).catch((err)=>{console.log(err);}); 
+  }
   if (banned[member.id]){
     if (banned[member.id].permban){
       bot.guilds.get(member.guild.id).members.get(member.id).kick().catch(function(err){console.log(err);});
