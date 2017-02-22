@@ -93,7 +93,8 @@ bot.on("guildCreate", guild => {
 });
 
 bot.on("guildMemberAdd", (member) => {
-  deleteSKInvites(msg);
+  if (!msg.author.bot)
+  deleteSKInvites(msg).catch((err)=>{console.log(err);});
   if (banned[member.id]){
     if (banned[member.id].permban){
       bot.guilds.get(member.guild.id).members.get(member.id).kick().catch(function(err){console.log(err);});
