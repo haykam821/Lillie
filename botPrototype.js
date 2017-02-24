@@ -1765,4 +1765,4 @@ sent1.delete(30000)
 }
 });
 
-bot.login("MjU4ODM0OTc0Mzg2NDIxNzYx.C4_COw.I8Gkh6LRKH_EUuDXX25FneJYkCM");
+bot.login(process.env.TOKEN);
