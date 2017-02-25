@@ -2,6 +2,7 @@
 setting["numUsers"].value starts counting from 0
 */
 
+let rainbowRoleGuild = "284433301945581589";
 let rainbowRole = "284906292341112832";
 let rainbowColors = ["#FF0000", "#FF8800", "#FFFF00", "#00FF00", "#0000FF", "#00FFFF", "#0000FF", "#8800FF", "#FF00FF"];
 let colorChangeTime = 5000;
@@ -13,7 +14,7 @@ var cycleColors = function(){
   }else{
     colorIndex++;
   }
-  bot.guilds.get(rainbowRole).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
+  bot.guilds.get(rainbowRoleGuild).roles.get(rainbowRole).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
   setTimeout(cycleColors, colorChangeTime);
   return 0;
 }
