@@ -92,10 +92,13 @@ bot.on("guildMemberAdd", (member) => {
       return;
     }
   }
-  bot.user.fetchProfile(member.id).catch(function(err){console.log(err);});
+  bot.user.fetchProfile(member.id).catch(function(err){console.log(err);}).then(() => {
+    if (member.guild.id == "284433301945581589"){
+      let nickname = member.username.toString().replace(/❂/gi, 'o');
+      bot.guilds.get("284433301945581589").members.get(user.id).setNickname("🌌 " + nickname).catch((err)=>{console.log(err);});
+    }
+  });
   bot.users.get(member.id).sendMessage("Welcome!");
-  let nickname = member.username.replace(/❂/gi, 'o');
-  bot.guilds.get("284433301945581589").members.get(user.id).setNickname("🌌 " + nickname).catch((err)=>{console.log(err);});
 });
 
 let bagCounter = 0;
