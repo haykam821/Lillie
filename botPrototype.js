@@ -2,12 +2,11 @@
 setting["numUsers"].value starts counting from 0
 */
 
-var autoNickname = function(user){
-  let nickname;
-  bot.guilds.get("284433301945581589").members.get(user.id).nickname.length > 0 ? nickname = bot.guilds.get("284433301945581589").members.get(user.id).nickname.replace(/❂/gi, 'o') : nickname = user.username.replace(/❂/gi, 'o');
-  bot.guilds.get("284433301945581589").members.get(user.id).setNickname("🌌 " + nickname).catch((err)=>{console.log(err); return 0;});
-  return 1;
-}
+let rainbowRole = "";
+let rainbowColors = ["#FF0000", "#FF8800", "#FFFF00", "#00FF00", "#0000FF", "#00FFFF", "#0000FF", "#8800FF", "#FF00FF"];
+let startingColor = 0;
+
+var cycleColors = 
 
 var Discord = require("discord.js");
 var bot = new Discord.Client();
@@ -90,11 +89,13 @@ bot.on("guildMemberAdd", (member) => {
   if (banned[member.id]){
     if (banned[member.id].permban){
       bot.guilds.get(member.guild.id).members.get(member.id).kick().catch(function(err){console.log(err);});
+      return;
     }
   }
   bot.user.fetchProfile(member.id).catch(function(err){console.log(err);});
   bot.users.get(member.id).sendMessage("Welcome!");
-  autoNickname(member);
+  let nickname = member.username.replace(/❂/gi, 'o');
+  bot.guilds.get("284433301945581589").members.get(user.id).setNickname("🌌 " + nickname).catch((err)=>{console.log(err);});
 });
 
 let bagCounter = 0;
