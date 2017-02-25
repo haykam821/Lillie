@@ -129,6 +129,7 @@ var react = function (msg, reactNum){
 }
 
 bot.on("message", msg => {
+  react(msg, 0);
   /*if (!msg.author.bot){
     var detected = false;
     var blockArray = msg.content.split(" ");
