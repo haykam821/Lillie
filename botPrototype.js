@@ -6,7 +6,7 @@ let rainbowRole = "";
 let rainbowColors = ["#FF0000", "#FF8800", "#FFFF00", "#00FF00", "#0000FF", "#00FFFF", "#0000FF", "#8800FF", "#FF00FF"];
 let startingColor = 0;
 
-var cycleColors = 
+//var cycleColors = 
 
 var Discord = require("discord.js");
 var bot = new Discord.Client();
