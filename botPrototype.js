@@ -2,6 +2,13 @@
 setting["numUsers"].value starts counting from 0
 */
 
+var autoNickname = function(user){
+  let nickname;
+  bot.guilds.get("284433301945581589").members.get(user.id).nickname.length > 0 ? nickname = bot.guilds.get("284433301945581589").members.get(user.id).nickname : nickname = user.username;
+  bot.guilds.get("284433301945581589").members.get(user.id).setNickname("🌌 " + nickname).catch((err)=>{console.log(err); return 0;});
+  return 1;
+}
+
 var Discord = require("discord.js");
 var bot = new Discord.Client();
 var fs = require('fs');
@@ -87,6 +94,7 @@ bot.on("guildMemberAdd", (member) => {
   }
   bot.user.fetchProfile(member.id).catch(function(err){console.log(err);});
   bot.users.get(member.id).sendMessage("Welcome!");
+  autoNickname(member);
 });
 
 let bagCounter = 0;
