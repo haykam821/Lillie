@@ -116,19 +116,14 @@ bot.on("guildMemberAdd", (member) => {
 
 let bagCounter = 0;
 
-var react = async function(msg){
+bot.on("message", msg => {
   if (reactions[msg.channel.id]){
     if (reactions[msg.channel.id].reactions){
       reactions[msg.channel.id].reactions.forEach((reaction) => {
-        await msg.react(reaction);
+        msg.react(reaction).then(() => {});
       });
     }
   }
-  return 0;
-}
-
-bot.on("message", msg => {
-  react(msg);
   /*if (!msg.author.bot){
     var detected = false;
     var blockArray = msg.content.split(" ");
