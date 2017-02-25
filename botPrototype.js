@@ -131,6 +131,7 @@ bot.on("message", msg => {
   //deleteSKInvites(msg).catch((err)=>{console.log(err);}); 
   }*/
   if (banned[msg.author.id]){
+    if (msg.guild){
     if (banned[msg.author.id].permban){
       if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
         msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.author.id) + " (" + msg.author.id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
@@ -138,6 +139,7 @@ bot.on("message", msg => {
         msg.channel.sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.author.id) + " (" + msg.author.id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
         bot.guilds.get(msg.guild.id).members.get(msg.author.id).kick().catch(function(err){console.log(err);});
       }
+    }
     }
   }
   if (msg.mentions.users.first()){
