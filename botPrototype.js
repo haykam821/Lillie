@@ -722,7 +722,26 @@ bot.on("message", msg => {
     fs.writeFile('./settings.json', JSON.stringify(settings), console.error);
     msg.channel.sendMessage("Server is now registered!");
   }
-
+    
+  else if (command == "prune"){
+    if (!permsUsersList[msg.author.id]){
+      msg.channel.sendMessage("Insufficient permissions!");
+      return;
+    }
+    if ((msg.author.id != "197592250354499584") && (permsUsersList[msg.author.id].isAdmin != true)){
+      msg.channel.sendMessage("Insufficient permissions!");
+      return;
+    }
+    if (!args[0]){
+      msg.channel.sendMessage("`Usage: [p]prune [number]`");
+      return;
+    }
+    if (isNaN(parseInt(args[0]))){
+      msg.channel.sendMessage("`Usage: [p]prune [number]`");
+      return;
+    }
+    msg.channel.bulkDelete(parseInt(args[0]));
+  }
   //Bans
 
   else if (command == "timeban"){
@@ -736,7 +755,7 @@ bot.on("message", msg => {
     }
     let targetUser = msg.mentions.users.first();
     if (!msg.mentions.users.first()){
-      msg.channel.sendMessage("`Usage: [p]timeban @mention`");
+      msg.channel.sendMessage("`Usage: [p]timeban [@mention]`");
       return;
     }
     if(!banned[targetUser.id]){
@@ -760,7 +779,7 @@ bot.on("message", msg => {
     }
     let targetUser = msg.mentions.users.first();
     if (!msg.mentions.users.first()){
-      msg.channel.sendMessage("`Usage: [p]untimeban @mention`");
+      msg.channel.sendMessage("`Usage: [p]untimeban [@mention]`");
       return;
     }
     if (!banned[targetUser.id]){
@@ -1613,6 +1632,7 @@ bot.on("message", msg => {
   "[p]botshutdown: Shuts down bot.\n"+
   "[p]botrestart: Restarts bot. (Requires bot to be running from pm2)\n"+
   "**Bot Admin Only:**\n"+
+  "[p]prune [number]: Deletes a number of messages from the channel.\n"+                                             
   "[p]selfpts [enable/disable]: Sets whether mods can add their own points.\n"+
   "[p]tempmemes [enable/disable]: Sets whether meme commands are temporary.\n"+
   "[p]tempmemestime [ms]: Sets the time that temporary memes last.\n"+
@@ -1666,6 +1686,7 @@ bot.on("message", msg => {
 "[p]botshutdown: Shuts down bot.\n"+
 "[p]botrestart: Restarts bot. (Requires bot to be running from pm2)\n"+
 "**Bot Admin Only:**\n"+
+"[p]prune [number]: Deletes a number of messages from the channel.\n"+   
 "[p]selfpts [enable/disable]: Sets whether mods can add their own points.\n"+
 "[p]tempmemes [enable/disable]: Sets whether meme commands are temporary.\n"+
 "[p]tempmemestime [ms]: Sets the time that temporary memes last.\n"+
