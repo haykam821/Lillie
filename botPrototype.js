@@ -2,11 +2,21 @@
 setting["numUsers"].value starts counting from 0
 */
 
-let rainbowRole = "";
+let rainbowRole = "284906292341112832";
 let rainbowColors = ["#FF0000", "#FF8800", "#FFFF00", "#00FF00", "#0000FF", "#00FFFF", "#0000FF", "#8800FF", "#FF00FF"];
-let startingColor = 0;
+let colorChangeTime = 5000;
+let colorIndex = 0;
 
-//var cycleColors = 
+var cycleColors = function(){
+  if (colorIndex >= rainbowColors.size() - 1){
+    colorIndex = 0;
+  }else{
+    colorIndex++;
+  }
+  bot.guilds.get(rainbowRole).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
+  setTimeout(cycleColors, colorChangeTime);
+  return 0;
+}
 
 var Discord = require("discord.js");
 var bot = new Discord.Client();
@@ -70,6 +80,7 @@ bot.on('ready', () => {
   bot.user.setStatus('online');
   bot.user.setGame('Pokémon Moon');
   fs.writeFile('./tempBanned.json', JSON.stringify({}), console.error);
+  cycleColors();
 });
 
 bot.on('error', e => {
