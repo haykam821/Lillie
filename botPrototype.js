@@ -8,7 +8,7 @@ let colorChangeTime = 5000;
 let colorIndex = 0;
 
 var cycleColors = function(){
-  if (colorIndex >= rainbowColors.size() - 1){
+  if (colorIndex >= rainbowColors.length - 1){
     colorIndex = 0;
   }else{
     colorIndex++;
