@@ -740,7 +740,7 @@ bot.on("message", msg => {
       msg.channel.sendMessage("`Usage: [p]prune [number]`");
       return;
     }
-    msg.channel.bulkDelete(parseInt(args[0]));
+    msg.channel.bulkDelete(parseInt(args[0]) + 1);
   }
   //Bans
 
