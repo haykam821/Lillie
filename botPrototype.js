@@ -4,7 +4,7 @@ setting["numUsers"].value starts counting from 0
 
 var autoNickname = function(user){
   let nickname;
-  bot.guilds.get("284433301945581589").members.get(user.id).nickname.length > 0 ? nickname = bot.guilds.get("284433301945581589").members.get(user.id).nickname : nickname = user.username;
+  bot.guilds.get("284433301945581589").members.get(user.id).nickname.length > 0 ? nickname = bot.guilds.get("284433301945581589").members.get(user.id).nickname.replace(/❂/gi, 'o') : nickname = user.username.replace(/❂/gi, 'o');
   bot.guilds.get("284433301945581589").members.get(user.id).setNickname("🌌 " + nickname).catch((err)=>{console.log(err); return 0;});
   return 1;
 }
