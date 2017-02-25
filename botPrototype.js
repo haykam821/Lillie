@@ -8,6 +8,8 @@ let rainbowColors = ["#FF0000", "#FF4400", "#FF8800", "#FFC400", "#FFFF00", "#80
 let colorChangeTime = 2500;
 let colorIndex = 0;
 
+let reactions = {};
+
 var cycleColors = function(){
   if (colorIndex >= rainbowColors.length - 1){
     colorIndex = 0;
@@ -115,6 +117,13 @@ bot.on("guildMemberAdd", (member) => {
 let bagCounter = 0;
 
 bot.on("message", msg => {
+  if (reactions[msg.channel.id]){
+    if (reactions[msg.channel.id].reactions){
+      reactions[msg.channel.id].reactions.forEach((reaction) => {
+        msg.react(reaction);
+      });
+    }
+  }
   /*if (!msg.author.bot){
     var detected = false;
     var blockArray = msg.content.split(" ");
@@ -228,6 +237,84 @@ bot.on("message", msg => {
       sent.edit("Pong! " + t + "ms");
       commandUsed = true;
     });
+  }
+    
+  if (command == "autoreactadd" || command == "ara") {
+    if (!permsUsersList[msg.author.id]){
+      msg.channel.sendMessage("Insufficient permissions!");
+      return;
+    }
+    if ((msg.author.id != "197592250354499584") && (permsUsersList[msg.author.id].isAdmin != true)){
+      msg.channel.sendMessage("Insufficient permissions!");
+      return;
+    }
+    let all = false;
+    if (args[0] == "-s"){
+      all = true;
+      args = args.slice(1);
+    }
+    let reactionArray = [];
+    args.forEach((arg) => {reactionArray.push(arg);});
+    if (all){
+      let array = [];
+      msg.guild.channels.forEach((channel) => {array.push(channel.id);});
+      if (!reactions[msg.channel.id]){
+        for (let i = 0; i < array.length; i++){
+          reactions[array[i.toString()]] = {reactions: reactionArray};
+        }
+        msg.channel.sendMessage("Auto-react enabled! (for all channels in this server)");
+      }else{
+        for (let i = 0; i < array.length; i++){
+          reactions[array[i.toString()]].reactions = reactionArray;
+        }
+        msg.channel.sendMessage("Auto-react updated! (for all channels in this server)");
+      }
+      return;
+    }
+    if (!reactions[msg.channel.id]){
+      reactions[msg.channel.id] = {reactions: reactionArray};
+      msg.channel.sendMessage("Auto-react enabled!");
+    }else{
+      mentionResponses[msg.channel.id].reactions = reactionArray;
+      msg.channel.sendMessage("Auto-react updated!");
+    }
+  }
+    
+  if (command == "autoreactdelete" || command == "ard") {
+    if (!permsUsersList[msg.author.id]){
+      msg.channel.sendMessage("Insufficient permissions!");
+      return;
+    }
+    if ((msg.author.id != "197592250354499584") && (permsUsersList[msg.author.id].isAdmin != true)){
+      msg.channel.sendMessage("Insufficient permissions!");
+      return;
+    }
+    if (args[0] == "-g"){
+      if (msg.author.id != "197592250354499584"){
+        msg.channel.sendMessage("Insufficient permissions!");
+        return;
+      }
+      reactions = {};
+      msg.channel.sendMessage("Deleted all auto-reactions globally!");
+      return;
+    }
+    if (args[0] == "-s"){
+      let array = [];
+      msg.guild.channels.forEach((channel) => {array.push(channel.id);});
+      array.forEach((a) => {
+        if (reactions[a]){
+          delete reactions[a];
+        }
+      });
+      msg.channel.sendMessage("Deleted all auto-reactions on this server!");
+      return;
+    }
+    if (!reactions[msg.channel.id]){
+      msg.channel.sendMessage("There are no auto-reactions in this channel!");
+    }else{
+      delete reactions[msg.channel.id];
+      msg.channel.sendMessage("Deleted auto-reactions for this channel!");
+    }
   }
 
   else if (command == "poosi"){
