@@ -121,7 +121,7 @@ var react = function (msg, reactNum){
     if (reactions[msg.channel.id].reactions){
       msg.react(reactions[msg.channel.id].reactions[reactNum]).then(() => {
         if (reactNum < reactions[msg.channel.id].reactions.length){
-          react(msg, reactNum + 1);
+          setTimeout(react(msg, reactNum + 1), 500);
         }
       });
     }
