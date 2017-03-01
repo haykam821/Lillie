@@ -949,13 +949,15 @@ bot.on("message", msg => {
     msg.channel.sendMessage(targetUser + " has been permanently banned!");
     let serverid = 0;
     let servername = "";
-    for (let i = 0; i < settings["numServers"].value; i++){
+    let allServers = [];
+    bot.guilds.forEach((guild) => {allServers.push(guild);});
+    for (let i = 0; i < allServers.length; i++){
       let x = i.toString();
-      if (bot.guilds.get(servers[x].id.toString())){
-      if (bot.guilds.get(servers[x].id.toString()).members.get(targetUser.toString())){
+      if (bot.guilds.get(allServers[x].id)){
+      if (bot.guilds.get(allServers[x].id).members.get(targetUser.toString())){
         serverid = servers[x].id;
         servername = servers[x].name;
-        if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
+        if (!bot.guilds.get(serverid).members.get(bot.user.id).hasPermission("KICK_MEMBERS")){
           msg.channel.sendMessage(bot.guilds.get(serverid).members.get(targetUser.toString()) + " (" + targetUser + ")" + " cannot be kicked from " + servername + " (" + serverid + ")!");
           continue;
         }
@@ -1669,13 +1671,15 @@ bot.on("message", msg => {
     }
     let serverid = 0;
     let servername = "";
-    for (let i = 0; i < settings["numServers"].value; i++){
+    let allServers = [];
+    bot.guilds.forEach((guild) => {allServers.push(guild);});
+    for (let i = 0; i < allServers.length; i++){
       let x = i.toString();
-      if (bot.guilds.get(servers[x].id.toString())){
-      if (bot.guilds.get(servers[x].id.toString()).members.get(targetUser.toString())){
-        serverid = servers[x].id;
-        servername = servers[x].name;
-        if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
+      if (bot.guilds.get(allServers[x].id)){
+      if (bot.guilds.get(allServers[x].id).members.get(targetUser.toString())){
+        serverid = allServers[x].id;
+        servername = allServers[x].name;
+        if (!bot.guilds.get(allServers[x].id).members.get(bot.user.id).hasPermission("KICK_MEMBERS")){
           msg.channel.sendMessage(bot.guilds.get(serverid).members.get(targetUser.toString()) + " (" + targetUser + ")" + " cannot be kicked from " + servername + " (" + serverid + ")!");
           continue;
         }
