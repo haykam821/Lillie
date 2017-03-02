@@ -1592,7 +1592,7 @@ bot.on("message", msg => {
 
   //Anti-raid protection
 
-  else if (command == "idraider"){
+  /*else if (command == "idraider"){
     if (!msg.mentions.users.first()){
       msg.channel.sendMessage("`Usage: [p]idraider @mention`");
       return;
@@ -1608,7 +1608,7 @@ bot.on("message", msg => {
     }
     msg.channel.sendMessage("Raider identified as: " + targetUser + "! Staff has been notified!");
     commandUsed = true;
-  }
+  }*/
 
   //Anti-raid protection
 
