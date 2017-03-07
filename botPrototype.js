@@ -10,6 +10,9 @@ let colorIndex = 0;
 
 let reactions = {};
 
+let kickMsgLimit = 2500;
+let kickMsgLimitState = false;
+
 var cycleColors = function(){
   if (colorIndex >= rainbowColors.length - 1){
     colorIndex = 0;
