@@ -850,7 +850,20 @@ bot.on("message", msg => {
       msg.channel.sendMessage("`Usage: [p]prune [number]`");
       return;
     }
-    msg.channel.bulkDelete(parseInt(args[0]) + 1);
+    if (args[0] > 99){
+      let numMsgs = parseInt(args[0]) + 1;
+      while (numMsgs > 0){
+        if (numMsgs > 99){
+          msg.channel.bulkDelete(100);
+          numMsgs -= 100;
+        }else{
+          msg.channel.bulkDelete(numMsgs);
+          numMsgs -= numMsgs;
+        }
+      }
+    }else{
+      msg.channel.bulkDelete(parseInt(args[0]) + 1);
+    }
   }
   //Bans
 
