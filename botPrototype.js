@@ -854,15 +854,25 @@ bot.on("message", msg => {
       let numMsgs = parseInt(args[0]) + 1;
       while (numMsgs > 0){
         if (numMsgs > 99){
-          msg.channel.bulkDelete(100);
+          msg.channel.bulkDelete(100).then(()=>{
+            if (numMsgs == 0){
+              msg.channel.sendMessage("Pruned ${args[0]} messages successfully!");
+            }
+          });;
           numMsgs -= 100;
         }else{
-          msg.channel.bulkDelete(numMsgs);
+          msg.channel.bulkDelete(numMsgs).then(()=>{
+            if (numMsgs == 0){
+              msg.channel.sendMessage("Pruned ${args[0]} messages successfully!");
+            }
+          });
           numMsgs -= numMsgs;
         }
       }
     }else{
-      msg.channel.bulkDelete(parseInt(args[0]) + 1);
+      msg.channel.bulkDelete(parseInt(args[0]) + 1).then(()=>{
+         msg.channel.sendMessage("Pruned ${args[0]} messages successfully!");
+      });
     }
   }
   //Bans
