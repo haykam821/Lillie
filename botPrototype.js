@@ -104,7 +104,7 @@ bot.on("guildCreate", guild => {
 });
 
 bot.on("guildMemberAdd", (member) => {
-  if (banned[member.id]){
+  if (banned[member.id] && member.guild.id != "291055526098239489"){
     if (banned[member.id].permban){
       bot.guilds.get(member.guild.id).members.get(member.id).kick().catch(function(err){bot.channels.get("288573875057590272").sendMessage(member + " (" + member.id + ")" + " cannot be kicked from " + member.guild.name + " (" + member.guild.id + ")!"); console.log(err);});
       return;
@@ -149,7 +149,7 @@ bot.on("message", msg => {
   });
   //deleteSKInvites(msg).catch((err)=>{console.log(err);}); 
   }*/
-  if (banned[msg.author.id]){
+  if (banned[msg.author.id] && msg.guild.id != "291055526098239489"){
     if (msg.guild){
     if (banned[msg.author.id].permban){
       if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
@@ -161,7 +161,7 @@ bot.on("message", msg => {
     }
     }
   }
-  if (msg.mentions.users.first()){
+  if (msg.mentions.users.first() && msg.guild.id != "291055526098239489"){
     if (!msg.author.bot){
     if (banned[msg.mentions.users.first().id]){
       if (banned[msg.mentions.users.first().id].permban){
