@@ -2,6 +2,8 @@
 setting["numUsers"].value starts counting from 0
 */
 
+var leave = true;
+
 let rainbowRoleGuild = ["284433301945581589", "271447763185696769", "291055526098239489"];
 let rainbowRole = ["284906292341112832", "289231041007190016", "291718221172834315"];
 let rainbowColors = ["#FF0000", "#FF4400", "#FF8800", "#FFC400", "#FFFF00", "#80FF00", "#00FF00", "#00ff80", "#00FFFF", "#0080FF", "#0000FF", "#8800FF", "#FF00FF", "#FF0080"];
@@ -97,11 +99,9 @@ bot.on('error', e => {
 });
 
 bot.on("guildCreate", guild => {
-  let i = 0;
-  while (servers[i]){
-    i++
+  if (leave){
+    bot.channels.get("288573875057590272").sendMessage("Auto-left " + guild.name + " (" + guild.id + ")!").then(()=>{guild.leave();});
   }
-  servers[i] = {"name": guild.name, "id": guild.id};
 });
 
 bot.on("guildMemberAdd", (member) => {
