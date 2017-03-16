@@ -21,7 +21,7 @@ var cycleColors = function(){
   }
   bot.guilds.get(rainbowRoleGuild[0]).roles.get(rainbowRole[0]).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
   bot.guilds.get(rainbowRoleGuild[1]).roles.get(rainbowRole[1]).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
-  bot.guilds.get(rainbowRoleGuild[2]).roles.get(rainbowRole[1]).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
+  //bot.guilds.get(rainbowRoleGuild[2]).roles.get(rainbowRole[1]).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
   setTimeout(cycleColors, colorChangeTime);
   return 0;
 }
