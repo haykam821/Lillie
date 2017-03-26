@@ -337,7 +337,7 @@ bot.on("message", msg => {
     let numShared = 0;
     origin.members.forEach((m)=>{
       if (target.member(m).id > 0){
-        msg.channel.sendMessage(target.member(m));
+        console.log(target.member(m));
         numShared++;
       }
     });
