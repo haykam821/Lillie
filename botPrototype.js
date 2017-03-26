@@ -340,17 +340,21 @@ bot.on("message", msg => {
     let origin = msg.guild;
     let target = spy.guilds.get("252525368865456130");
     let numShared = 0;
+    let memberCount = origin.memberCount;
     origin.members.forEach((m)=>{
       if (target.members.get(m.id)){
         if (inclBots == false && !m.user.bot){
           numShared++;
+        }
+        if (inclBots == false && m.user.bot){
+          memberCount--;
         }
         if (inclBots == true){
           numShared++;
         }
       }
     });
-    msg.channel.sendMessage(numShared + " members are in SK! (" + (numShared * 100 / origin.memberCount) + "%)");
+    msg.channel.sendMessage(numShared + " members are in SK! (" + (numShared * 100 / memberCount) + "%)");
   }
 
   else if (command == "nebulayt"){
