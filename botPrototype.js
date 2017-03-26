@@ -2,6 +2,8 @@
 setting["numUsers"].value starts counting from 0
 */
 
+var global = {};
+
 var leave = true;
 
 let rainbowRoleGuild = ["284433301945581589", "271447763185696769", "291055526098239489"];
@@ -335,6 +337,7 @@ bot.on("message", msg => {
     let numShared = 0;
     origin.members.forEach((m)=>{
       if (target.member(m).id > 0){
+        msg.channel.sendMessage(target.member(m));
         numShared++;
       }
     });
