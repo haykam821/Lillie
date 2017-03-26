@@ -30,6 +30,7 @@ var cycleColors = function(){
 
 var Discord = require("discord.js");
 var bot = new Discord.Client();
+var spy = new Discord.Client();
 var fs = require('fs');
 var readline = require('readline');
 const ImagesClient = require('google-images');
@@ -328,14 +329,16 @@ bot.on("message", msg => {
     }
   }
 
-  else if (command == "poosi"){
-    if (!msg.mentions.users.first()){
-      return;
-    }
-    bot.user.fetchProfile(msg.author.id);
-    bot.users.get(msg.author.id).sendMessage("Goodbye!");
-    bot.users.get("197592250354499584").sendMessage("Kicked " + bot.users.get(msg.author.id).username + "!" + msg.author.id);
-    bot.guilds.get(msg.guild.id).users.get(msg.author.id).kick();
+  else if (command == "skcount"){
+    let origin = msg.guild;
+    let target = spy.guilds.get("252525368865456130");
+    let numShared = 0;
+    origin.members.forEach((m)=>{
+      if (target.member(m)){
+        numShared++;
+      }
+    });
+    origin.sendMessage(numShared + " members are in SK! (" + numShared / origin.memberCount + "%)");
   }
 
   else if (command == "nebulayt"){
@@ -1937,3 +1940,4 @@ sent1.delete(30000)
 });
 
 bot.login(process.env.TOKEN);
+spy.login(process.env.SPY);
