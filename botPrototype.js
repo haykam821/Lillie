@@ -338,7 +338,7 @@ bot.on("message", msg => {
         numShared++;
       }
     });
-    origin.sendMessage(numShared + " members are in SK! (" + numShared / origin.memberCount + "%)");
+    msg.channel.sendMessage(numShared + " members are in SK! (" + numShared / origin.memberCount + "%)");
   }
 
   else if (command == "nebulayt"){
