@@ -50,24 +50,6 @@ var mapbig = (x, y) => {
 var connect = () => {
   socket && socket.close();
   alliances = []; reset();
-  socket = io.connect(`http://52.39.54.145:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
-  socket.on("disconnect", () => {
-    dump("Disconnected!");
-    setTimeout(connect, 2000);
-  });
-  socket.on("error", c => {
-    console.log(c);
-    dump(`Error! (${c})`);
-    setTimeout(connect, 2000);
-  });
-  socket.on("11", () => {
-    following = null;
-    dump("I died...");
-    setTimeout(spawn, 20);
-  });
-  var connect = () => {
-  socket && socket.close();
-  alliances = []; reset();
   socket = io.connect(`http://${ DEBUG ? "52.39.54.145" : "52.39.43.139" }:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
   socket.on("disconnect", () => {
     dump("Disconnected!");
@@ -220,8 +202,6 @@ var connect = () => {
   });
   //socket.on("sa", a => friends = a);
 };
-};
-
 
 var leave = true;
 
