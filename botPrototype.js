@@ -4,7 +4,7 @@ var globalMsgID = "296430530575204352";
 var settingsChannel = "292523376352821248";
 var settingsMsgID = "296436848388079616";
 var DEBUG = true;
-/*
+
 var io = require("socket.io-client");
 var util = require("util");
 var socket = null;
@@ -220,7 +220,8 @@ var connect = () => {
   });
   //socket.on("sa", a => friends = a);
 };
-*/
+};
+
 
 var leave = true;
 
@@ -2135,7 +2136,7 @@ sent1.delete(30000)
     }
     msg.channel.sendMessage("Mode does not exist!");
   }
-/*
+
   else if (command == "jointribe"){
     if (!args[0]){
       msg.channel.sendMessage("`Usage: [p]jointribe [in-game name]`");
@@ -2174,7 +2175,7 @@ sent1.delete(30000)
       }
       msg.reply(`404 Error: Not found. Make sure they are/have been nearby.`);
   }
-*/
+
   if (settings["latency"].value == true && commandUsed == true) {
     msg.channel.sendMessage("Latency:").then((sent) => {
       let t = sent.createdTimestamp - msg.createdTimestamp;
