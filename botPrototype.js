@@ -22,7 +22,7 @@ var lastkeys = {};
 var jointm = {};
 var reset = () => { keys = {}; lastkeys = {}; };
 var updatels = () => {};
-var me = null;
+var me = {x: 0, y: 0, sid: 0, };
 var map = (x, y) => {
   var yl = y < 0 ? 0 : y >= 12000 ? 11 : 0 | (y / 1000);
   var n = "- - - - - - - - - - - -", g = n.split(" ");
@@ -290,8 +290,12 @@ bot.on('ready', () => {
   bot.user.setStatus('online');
   bot.user.setGame('Pokémon Moon');
   fs.writeFile('./tempBanned.json', JSON.stringify({}), console.error);
-  bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {global = JSON.parse(`${m.content}`);});
-  bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {settings = JSON.parse(`${m.content}`);});
+  let gl;
+  let st;
+  bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {gl = m.content;});
+  bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {st = m.content;});
+  global = JSON.parse(gl);
+  settings = JSON.parse(st);
   cycleColors();
   connect();
 });
