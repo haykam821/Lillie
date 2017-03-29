@@ -2166,7 +2166,7 @@ sent1.delete(30000)
       autohunt = false;
       keys["m"] = 0;
       for (var j in players) {
-        if (players[j].name === args.join(" ")) {
+        if (players[j].name === args.join(" ")){
           hunting = players[j];
           msg.reply(`Auto-attacking ${i}!`);
           return;
