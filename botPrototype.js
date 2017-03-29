@@ -2185,6 +2185,7 @@ sent1.delete(30000)
         let address = args[0].replace("http://", "").replace("moomoo.io", "").replace("/", "").replace("?party=", "");
         if (validIP(address)){
           global.moo.partyLink = address;
+          socket.close();
           msg.reply("Party Link set to: " + address);
         }else{
           msg.reply("Invalid Link!");
