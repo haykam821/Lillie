@@ -1,10 +1,10 @@
-var global = {moo: {logChannel: "296430168141201410", name: "Lillie", alliance: "Nebula", acceptAll: false, requestTimeout: 300000, partyLink: "52.39.54.145"}}
+var global = {moo: {logChannel: "296430168141201410", name: "Lillie", alliance: "Nebula", acceptAll: false, requestTimeout: 300000, partyLink: "52.39.54.145"}};
 
 var globalChannel = "296429968555114526";
 var globalMsgID = "296430530575204352";
 var settingsChannel = "292523376352821248";
 var settingsMsgID = "296436848388079616";
-var DEBUG = true;
+var DEBUG = false;
 
 var io = require("socket.io-client");
 var util = require("util");
@@ -59,7 +59,7 @@ var mapbig = (x, y) => {
 var connect = () => {
   socket && socket.close();
   alliances = []; reset();
-  socket = io.connect(`http://${ DEBUG ? "52.39.54.145" : "52.39.43.139" }:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
+  socket = io.connect(`http://${ DEBUG ? "52.39.54.145" : global.moo.partyLink }:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
   socket.on("disconnect", () => {
     dump("Disconnected!");
     setTimeout(connect, 2000);
