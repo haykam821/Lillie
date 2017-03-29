@@ -2135,7 +2135,7 @@ sent1.delete(30000)
     }
     msg.channel.sendMessage("Mode does not exist!");
   }
-
+/*
   else if (command == "jointribe"){
     if (!args[0]){
       msg.channel.sendMessage("`Usage: [p]jointribe [in-game name]`");
@@ -2174,7 +2174,7 @@ sent1.delete(30000)
       }
       msg.reply(`404 Error: Not found. Make sure they are/have been nearby.`);
   }
-
+*/
   if (settings["latency"].value == true && commandUsed == true) {
     msg.channel.sendMessage("Latency:").then((sent) => {
       let t = sent.createdTimestamp - msg.createdTimestamp;
