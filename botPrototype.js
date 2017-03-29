@@ -2160,7 +2160,7 @@ sent1.delete(30000)
       for (var j in players) {
         if (players[j].name === args.join(" ")){
           hunting = players[j];
-          msg.reply(`Auto-attacking ${i}!`);
+          msg.reply(`Auto-attacking ${args[0]}!`);
           return;
         }
       }
