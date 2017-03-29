@@ -272,12 +272,8 @@ bot.on('ready', () => {
   fs.writeFile('./tempBanned.json', JSON.stringify({}), console.error);
   let gl;
   let st;
-  bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {gl = JSON.parse(m.content);});
-  bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {st = JSON.parse(m.content);});
-  //global = JSON.parse(gl);
-  //settings = JSON.parse(st);
-  console.log(gl);
-  console.log(st);
+  bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {global = JSON.parse(m.content);});
+  bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {settings = JSON.parse(m.content);});
   cycleColors();
   connect();
 });
