@@ -84,7 +84,7 @@ var connect = () => {
     setTimeout(spawn, 20);
   });
   socket.on("10", (a, b) => {
-    if (a == me.sid && b < 85) { eat(); }
+    if (me && a == me.sid && b < 85) { eat(); }
   });
   socket.once("connect", () => {
     dump("Connected!");
@@ -290,8 +290,8 @@ bot.on('ready', () => {
   bot.user.setStatus('online');
   bot.user.setGame('Pokémon Moon');
   fs.writeFile('./tempBanned.json', JSON.stringify({}), console.error);
-  bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {global = JSON.parse(m.content);});
-  bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {settings = JSON.parse(m.content);});
+  bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {global = JSON.parse(`${m.content}`);});
+  bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {settings = JSON.parse(`${m.content}`);});
   cycleColors();
   connect();
 });
