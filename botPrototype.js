@@ -1,4 +1,5 @@
-var global = {moo: {logChannel: "296430168141201410", name: "Lillie", alliance: "Nebula", acceptAll: false, requestTimeout: 300000}};
+var global = {moo: {logChannel: "296430168141201410", name: "Lillie", alliance: "Nebula", acceptAll: false, requestTimeout: 300000}, partyLink: "52.39.54.145"
+
 var globalChannel = "296429968555114526";
 var globalMsgID = "296430530575204352";
 var settingsChannel = "292523376352821248";
