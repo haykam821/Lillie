@@ -32,6 +32,14 @@ var map = (x, y) => {
   }
   return `X = ${x}, Y = ${y}:\n\`\`\`diff\n${q.join("\n")}\n\`\`\``;
 };
+function validIP(inputText){  
+ var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;  
+ if(inputText.value.match(ipformat)){  
+  return true;  
+ }else{  
+  return false;
+ }
+}  
 var eat = () => {
   keys.m && socket.emit(4, 0);
   socket.emit("5", foodit);
@@ -50,7 +58,7 @@ var mapbig = (x, y) => {
 var connect = () => {
   socket && socket.close();
   alliances = []; reset();
-  socket = io.connect(`http://${ DEBUG ? "52.39.54.145" : "52.39.43.139" }:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
+  socket = io.connect(`http://${global.moo.partyLink}`, { reconnection: false, query: "man=1" });
   socket.on("disconnect", () => {
     dump("Disconnected!");
     setTimeout(connect, 2000);
@@ -2156,6 +2164,68 @@ sent1.delete(30000)
         }
       }
       msg.reply(`404 Error: Not found. Make sure they are/have been nearby.`);
+  }
+    
+  else if (command == "listplayers"){
+    let names = [];
+    plaayers.forEach((p)=>{
+      names.push(p.name);
+    });
+    msg.channel.sendMessage(names.join("\n"));
+  }
+    
+  else if (command == "partylink"){
+    msg.reply("The current link is: http://moomoo.io/?party=" + global.moo.partyLink + "! Type [p]jointribe [in-game name] and join " + global.moo.alliance + "!");
+  }
+    
+  else if (command == "setpartylink"){
+    if (permsUsersList[msg.author.id]){
+      if (permsUsersList[msg.author.id].isAdmin){
+        let address = args[0].replace("http://", "").replace("moomoo.io", "").replace("/", "").replace("?party=", "");
+        if (validIP(address)){
+          global.moo.partyLink = address;
+          msg.reply("Party Link set to: " + address);
+        }else{
+          msg.reply("Invalid Link!");
+        }
+      }else{
+        msg.channel.sendMessage("Insufficient Permissions!");
+        return;
+      }
+    }else{
+      msg.channel.sendMessage("Insufficient Permissions!");
+      return;
+    }
+  }
+    
+  else if (command == "connect"){
+    if (permsUsersList[msg.author.id]){
+      if (permsUsersList[msg.author.id].isAdmin){
+        connect();
+        msg.reply("Connected!");
+      }else{
+        msg.channel.sendMessage("Insufficient Permissions!");
+        return;
+      }
+    }else{
+      msg.channel.sendMessage("Insufficient Permissions!");
+      return;
+    }
+  }
+    
+  else if (command == "disconnect"){
+    if (permsUsersList[msg.author.id]){
+      if (permsUsersList[msg.author.id].isAdmin){
+        socket.close();
+        msg.reply("Disconnected!");
+      }else{
+        msg.channel.sendMessage("Insufficient Permissions!");
+        return;
+      }
+    }else{
+      msg.channel.sendMessage("Insufficient Permissions!");
+      return;
+    }
   }
 
   if (settings["latency"].value == true && commandUsed == true) {
