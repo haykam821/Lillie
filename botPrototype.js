@@ -1,8 +1,226 @@
-/*
-setting["numUsers"].value starts counting from 0
-*/
+var global = {moo: {logChannel: "296430168141201410", name: "Lillie", alliance: "Nebula", acceptAll: false, requestTimeout: 300000}};
+var globalChannel = "296429968555114526";
+var globalMsgID = "296430530575204352";
+var settingsChannel = "292523376352821248";
+var settingsMsgID = "296436848388079616";
+var DEBUG = true;
 
-var global = {};
+var io = require("socket.io-client");
+var util = require("util");
+var socket = null;
+var SID = null, ID = null;
+var alliances = [];
+var quenes = {};
+var x = 0, y = 0;
+var spawn = () => { socket.emit("1", { name: global.moo.name }); };
+var dump = (content) => {bot.channels.get(global.moo.logChannel).sendMessage(content).catch((err)=>{console.err(err);})};
+var players = [], lastage = 1;
+var foodit = 0;
+var following = null, hunting = null, autohunt = false;
+var keys = {};
+var lastkeys = {};
+var jointm = {};
+var reset = () => { keys = {}; lastkeys = {}; };
+var updatels = () => {};
+var me = null;
+var map = (x, y) => {
+  var yl = y < 0 ? 0 : y >= 12000 ? 11 : 0 | (y / 1000);
+  var n = "- - - - - - - - - - - -", g = n.split(" ");
+  g[x < 0 ? 0 : x >= 12000 ? 11 : 0 | (x / 1000)] = "+";
+  for (var i = 0, q = []; i <= 12; i++) {
+    i == yl ? q.push(g.join(" ")) : q.push(n);
+  }
+  return `X = ${x}, Y = ${y}:\n\`\`\`diff\n${q.join("\n")}\n\`\`\``;
+};
+var eat = () => {
+  keys.m && socket.emit(4, 0);
+  socket.emit("5", foodit);
+  socket.emit(4, 1);
+  keys.m || socket.emit(4, 0);
+};
+var mapbig = (x, y) => {
+  var yl = y < 0 ? 0 : y >= 12000 ? 24 : 0 | (y / 480);
+  var n = "- - - - - - - - - - - - - - - - - - - - - - - - -", g = n.split(" ");
+  g[x < 0 ? 0 : x >= 12000 ? 24 : 0 | (x / 480)] = "+";
+  for (var i = 0, q = []; i <= 25; i++) {
+    i == yl ? q.push(g.join(" ")) : q.push(n);
+  }
+  return `X = ${x}, Y = ${y}:\n\`\`\`diff\n${q.join("\n")}\n\`\`\``;
+};
+var connect = () => {
+  socket && socket.close();
+  alliances = []; reset();
+  socket = io.connect(`http://52.39.54.145:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
+  socket.on("disconnect", () => {
+    dump("Disconnected!");
+    setTimeout(connect, 2000);
+  });
+  socket.on("error", c => {
+    console.log(c);
+    dump(`Error! (${c})`);
+    setTimeout(connect, 2000);
+  });
+  socket.on("11", () => {
+    following = null;
+    dump("I died...");
+    setTimeout(spawn, 20);
+  });
+  var connect = () => {
+  socket && socket.close();
+  alliances = []; reset();
+  socket = io.connect(`http://${ DEBUG ? "52.39.54.145" : "52.39.43.139" }:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
+  socket.on("disconnect", () => {
+    dump("Disconnected!");
+    setTimeout(connect, 2000);
+  });
+  socket.on("error", c => {
+    console.log(c);
+    dump("Error! " + c);
+    setTimeout(connect, 2000);
+  });
+  socket.on("11", () => {
+    following = null;
+    dump("I died...");
+    setTimeout(spawn, 20);
+  });
+  socket.on("10", (a, b) => {
+    if (a == me.sid && b < 85) { eat(); }
+  });
+  socket.once("connect", () => {
+    dump("Connected!");
+    console.log("Connected!");
+    var s = 0;
+    setInterval(() => {
+      if (hunting && hunting.visible) {
+        var dx = hunting.x - me.x;
+        var dy = hunting.y - me.y;
+        keys["m"] = dx*dx + dy*dy > 40000 ? 0 : 1;
+        keys["r"] = +(dx >  50);
+        keys["l"] = +(dx < -50);
+        keys["d"] = +(dy >  50);
+        keys["u"] = +(dy < -50);
+        socket.emit("2", Math.atan2(dy, dx));
+      } else if (!following && hunting) {
+        reset();
+      } else if (following && following.visible) {
+        var dx = following.x - me.x;
+        var dy = following.y - me.y;
+        keys["r"] = +(dx >  200);
+        keys["l"] = +(dx < -200);
+        keys["d"] = +(dy >  200);
+        keys["u"] = +(dy < -200);
+        socket.emit("2", Math.atan2(dy, dx));
+        following.invisible = false;
+      } else if (following && !following.invisible) {
+        following.invisible = true;
+        reset();
+        following.userep.reply("Hold up, I can't see you now!");
+      } else {
+        socket.emit("2", (Math.PI*2*s) % Math.PI*2 - Math.PI);
+        s += 1/40;
+      }
+      for (var i in keys) {
+        if (lastkeys[i] != keys[i]) {
+          if (i == "m") {
+            socket.emit("4", lastkeys[i] = keys[i]);
+          } else {
+            socket.emit("3", i, lastkeys[i] = keys[i]);
+          }
+        }
+      }
+    }, 33);
+    spawn();
+    setTimeout(() => socket.emit("8", global.moo.alliance), 20);
+  });
+  socket.on("15", (a, b, c) => {
+    if (c > lastage) {
+      lastage = c;
+      switch (+c) {
+        case 2: socket.emit("6", 13); break;
+        case 3: socket.emit("6", foodit = 1); break;
+      }
+    }
+  });
+  socket.on("2", (a, b) => {
+    players[a[0]] = players[a[1]] = {
+      id: a[0], sid: a[1], visible: true,
+      name: a[2], x: a[3], y: a[4]
+    };
+    if (b) {
+      me = players[a[1]];
+      dump(`I am at X = ${me.x}, Y = ${me.y}`);
+      updatels(me.x, me.y);
+    }
+  });
+  socket.on("4", a => {
+    var cur = players[a];
+    if (!cur || !cur.visible) { return; }
+    dump(`I just killed \`${cur.name}\`!`);
+  });
+  socket.on("3", (a) => {
+    for (var i in players) { players[i].visible = false; }
+    var rec = null, recd = Infinity;
+    for (var d = 0; d < a.length; d += 7) {
+      if (+a[d] == me.sid) {
+        var ox = me.x, oy = me.y;
+        me.x = a[d+1];
+        me.y = a[d+2];
+        if (~(ox/480) != ~(me.x/480) || ~(oy/480) != ~(me.y/480)) {
+          updatels(me.x, me.y);
+        }
+        continue;
+      }
+      var cur = players[a[d]];
+      cur.visible = true;
+      cur.x = a[d+1];
+      cur.y = a[d+2];
+      if (autohunt) {
+        var c = (cur.x-me.x)*(cur.x-me.x) + (cur.y-me.y)*(cur.y-me.y);
+        if (c < recd) {
+          recd = c;
+          rec = cur;
+        }
+      }
+    }
+    if (autohunt) { hunting = rec; }
+  });
+  socket.on("an", (a, name) => {
+    var accept = quenes[name] && quenes[name].expire > Date.now();
+    if (global.moo.acceptAll){
+      accept = true;
+    }
+    if (jointm[name] < Date.now()) {
+      dump(`\`${name}\` requested to join! I ${ accept ? "accept" : "reject" }ed!`);
+    }
+    jointm[name] = Date.now() + 10000;
+    socket.emit("11", a, +accept);
+  });
+  socket.on("ac", a => alliances.push(a));
+  socket.on("ad", a => {
+    for (var c = alliances.length - 1; c >= 0; c--) if (alliances[c].sid == a) { alliances.splice(c, 1); }
+  });
+  socket.on("id", a => alliances = a.teams);
+  socket.on("1", r => {
+    me.sid = r;
+    dump("Spawned!");
+  });
+  socket.on("5", r => {
+    for (var i = 0; i < 30; i += 3) {
+      var sid = r[0];
+      /*if 
+      friends
+          for (var d = 0; d < friends.length;) c = player.isOwner &&
+        friends[d] != player.sid ?
+        "<div class='joinAlBtn' onclick='kickFromClan(" + friends[d] +
+        ")'>Kick</div>" : "", a += "<div class='allianceItem' style='color:" +
+        (friends[d] == player.sid ? "#fff" : "rgba(255,255,255,0.6)") +
+        "'>" + friends[d + 1] + c + "</div>", d += 2;*/
+    }
+    //console.log(r.join(", "));
+  });
+  //socket.on("sa", a => friends = a);
+};
+
 
 var leave = true;
 
@@ -16,6 +234,11 @@ let reactions = {};
 
 let kickMsgLimit = 2500;
 let kickMsgLimitState = false;
+
+function msToTime(duration) {
+  var milliseconds = parseInt((duration%1000)/100), seconds = parseInt((duration/1000)%60), minutes = parseInt((duration/(1000*60))%60), hours = parseInt((duration/(1000*60*60)));
+  return hours +  " hours, " + minutes + " minutes, " + seconds + " seconds, " + milliseconds + " milliseconds";
+}
 
 var cycleColors = function(){
   if (colorIndex >= rainbowColors.length - 1){
@@ -60,45 +283,30 @@ let custmsgs = JSON.parse(fs.readFileSync('./custmsgs.json', 'utf8'));
 let pointRoles = JSON.parse(fs.readFileSync('./pointRoles.json', 'utf8'));
 let questRoles = JSON.parse(fs.readFileSync('./questRoles.json', 'utf8'));
 let civilWarRoles = JSON.parse(fs.readFileSync('./civilWarRoles.json', 'utf8'));
-/*
-function detectSKInvite(x) {
-  var detected = false;
-  x.split(" ").forEach((block)=>{
-    if (bot.fetchInvite(block)){
-      if (bot.fetchInvite(block).guild.id == "252525368865456130"){
-        detected = true;
-      }
-    }
-  });
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(detected);
-    }, 10);
-  });
-}
-
-async function deleteSKInvites(message){
-  var hasSKInvite = await detectSKInvite(message.content);
-  if (hasSKInvite){
-    msg.delete();
-    msg.reply("Invites to SK are forbidden!");
-    return true;
-  }
-  return false;
-}
-*/
 
 bot.on('ready', () => {
   console.log('I am ready!');
   bot.user.setStatus('online');
   bot.user.setGame('Pokémon Moon');
   fs.writeFile('./tempBanned.json', JSON.stringify({}), console.error);
+  bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {global = JSON.parse(m.content);});
+  bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {settings = JSON.parse(m.content);});
   cycleColors();
+  connect();
 });
 
 bot.on('error', e => {
   if (e);
   console.error(e);
+});
+
+bot.on("messageUpdate", (o, n) => {
+  if (n.id == globalMsgID){
+    global = JSON.parse(n.content);
+  }
+  if (n.id == settingsMsgID){
+    settings = JSON.parse(n.content);
+  }
 });
 
 bot.on("guildCreate", guild => {
@@ -999,11 +1207,11 @@ bot.on("message", msg => {
     let allServers = [];
     bot.guilds.forEach((guild) => {allServers.push(guild);});
     for (let i = 0; i < allServers.length; i++){
-      let x = i.toString();
-      if (bot.guilds.get(allServers[x].id)){
-      if (bot.guilds.get(allServers[x].id).members.get(targetUser.toString())){
-        serverid = servers[x].id;
-        servername = servers[x].name;
+      let xx = i.toString();
+      if (bot.guilds.get(allServers[xx].id)){
+      if (bot.guilds.get(allServers[xx].id).members.get(targetUser.toString())){
+        serverid = servers[xx].id;
+        servername = servers[xx].name;
         if (!bot.guilds.get(serverid).members.get(bot.user.id).hasPermission("KICK_MEMBERS")){
           msg.channel.sendMessage(bot.guilds.get(serverid).members.get(targetUser.toString()) + " (" + targetUser + ")" + " cannot be kicked from " + servername + " (" + serverid + ")!");
           continue;
@@ -1721,12 +1929,12 @@ bot.on("message", msg => {
     let allServers = [];
     bot.guilds.forEach((guild) => {allServers.push(guild);});
     for (let i = 0; i < allServers.length; i++){
-      let x = i.toString();
-      if (bot.guilds.get(allServers[x].id)){
-      if (bot.guilds.get(allServers[x].id).members.get(targetUser.toString())){
-        serverid = allServers[x].id;
-        servername = allServers[x].name;
-        if (!bot.guilds.get(allServers[x].id).members.get(bot.user.id).hasPermission("KICK_MEMBERS")){
+      let xx = i.toString();
+      if (bot.guilds.get(allServers[xx].id)){
+      if (bot.guilds.get(allServers[xx].id).members.get(targetUser.toString())){
+        serverid = allServers[xx].id;
+        servername = allServers[xx].name;
+        if (!bot.guilds.get(allServers[xx].id).members.get(bot.user.id).hasPermission("KICK_MEMBERS")){
           msg.channel.sendMessage(bot.guilds.get(serverid).members.get(targetUser.toString()) + " (" + targetUser + ")" + " cannot be kicked from " + servername + " (" + serverid + ")!");
           continue;
         }
@@ -1897,7 +2105,7 @@ sent1.delete(30000)
       return;
     }
     if (args[1]){
-      if (args[1].toLowerCase() == "--nickname"){
+      if (args[1].toLowerCase() == "-nickname"){
         if (args[0] == "Lillie"){
           msg.guild.members.get(bot.user.id).setNickname("Lillie");
           bot.user.setAvatar("https://miketendo64.files.wordpress.com/2016/06/1a.png?w=657&h=657");
@@ -1909,7 +2117,7 @@ sent1.delete(30000)
           return;
         }
       }
-      if (args[1].toLowerCase() == "--setusername"){
+      if (args[1].toLowerCase() == "-setusername"){
         if (args[0] == "Lillie"){
           bot.user.setUsername("Lillie");
           bot.user.setAvatar("https://miketendo64.files.wordpress.com/2016/06/1a.png?w=657&h=657");
@@ -1922,10 +2130,49 @@ sent1.delete(30000)
         }
       }
     }else if (!args[1]){
-      msg.channel.sendMessage("Use `--nickname or --setusername`!");
+      msg.channel.sendMessage("Use `-nickname or -setusername`!");
       return;
     }
     msg.channel.sendMessage("Mode does not exist!");
+  }
+
+  else if (command == "jointribe"){
+    if (!args[0]){
+      msg.channel.sendMessage("`Usage: [p]jointribe [in-game name]`");
+    }
+    quenes[args.join(" ")] = { expire: Date.now() + global.moo.requestTimeout, by: msg.member };
+    msg.reply("Request sent successfully! Please join with the name of `" + args.join(" ") + "` to be accepted. This will only last " + msToTime(global.moo.requestTimeout) + "!");
+    return;
+  }
+
+  else if (command == "coords"){
+    msg.reply(`I am at X = ${me.x}, Y = ${me.y}. Do \`[p]map\` for a map.`);
+    return;
+  }
+
+  else if (command == "map"){
+    msg.reply("I am at:\n" + mapbig(me.x, me.y));
+    return;
+  }
+
+  else if (command == "autoattack"){
+    if (args[0] && args[0].toLowerCase() == "-disable"){
+      msg.reply("Auto-attack disabled!");
+      following = autohunt = hunting = null;
+      reset();
+      return;
+    }
+    if (!args[0]) { autohunt = true; msg.reply("Now auto-attacking!"); keys["m"] = 0; return; }
+      autohunt = false;
+      keys["m"] = 0;
+      for (var j in players) {
+        if (players[j].name === args.join(" ")) {
+          hunting = players[j];
+          msg.reply(`Auto-attacking ${i}!`);
+          return;
+        }
+      }
+      msg.reply(`404 Error: Not found. Make sure they are/have been nearby.`);
   }
 
   if (settings["latency"].value == true && commandUsed == true) {
