@@ -59,7 +59,7 @@ var mapbig = (x, y) => {
 var connect = () => {
   socket && socket.close();
   alliances = []; reset();
-  socket = io.connect(`http://${ global.moo.partyLink}`, { reconnection: false, query: "man=1" });
+  socket = io.connect(`http://${ DEBUG ? "52.39.54.145" : "52.39.43.139" }:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
   socket.on("disconnect", () => {
     dump("Disconnected!");
     setTimeout(connect, 2000);
