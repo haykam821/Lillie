@@ -171,10 +171,10 @@ var connect = () => {
     if (global.moo.acceptAll){
       accept = true;
     }
-    if (jointm[name] < Date.now()) {
+    //if (jointm[name] < Date.now()) {
       dump(`\`${name}\` requested to join! I ${ accept ? "accept" : "reject" }ed!`);
-    }
-    jointm[name] = Date.now() + 10000;
+    //}
+    //jointm[name] = Date.now() + 10000;
     socket.emit("11", a, +accept);
   });
   socket.on("ac", a => alliances.push(a));
@@ -272,8 +272,8 @@ bot.on('ready', () => {
   fs.writeFile('./tempBanned.json', JSON.stringify({}), console.error);
   let gl;
   let st;
-  bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {gl = m.content;});
-  bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {st = m.content;});
+  bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {gl = JSON.parse(m.content);});
+  bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {st = JSON.parse(m.content);});
   //global = JSON.parse(gl);
   //settings = JSON.parse(st);
   console.log(gl);
