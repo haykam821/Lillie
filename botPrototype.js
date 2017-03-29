@@ -4,7 +4,7 @@ var globalMsgID = "296430530575204352";
 var settingsChannel = "292523376352821248";
 var settingsMsgID = "296436848388079616";
 var DEBUG = true;
-
+/*
 var io = require("socket.io-client");
 var util = require("util");
 var socket = null;
@@ -220,7 +220,7 @@ var connect = () => {
   });
   //socket.on("sa", a => friends = a);
 };
-
+*/
 
 var leave = true;
 
