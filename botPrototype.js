@@ -294,8 +294,10 @@ bot.on('ready', () => {
   let st;
   bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {gl = m.content;});
   bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {st = m.content;});
-  global = JSON.parse(gl);
-  settings = JSON.parse(st);
+  //global = JSON.parse(gl);
+  //settings = JSON.parse(st);
+  console.log(gl);
+  console.log(st);
   cycleColors();
   connect();
 });
