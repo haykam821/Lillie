@@ -2169,7 +2169,7 @@ sent1.delete(30000)
     
   else if (command == "listplayers"){
     let names = [];
-    plaayers.forEach((p)=>{
+    players.forEach((p)=>{
       names.push(p.name);
     });
     msg.channel.sendMessage(names.join("\n"));
