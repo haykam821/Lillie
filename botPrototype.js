@@ -35,7 +35,7 @@ var map = (x, y) => {
 };
 function validIP(inputText){  
  var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;  
- if(inputText.value.match(ipformat)){  
+ if(inputText.match(ipformat)){  
   return true;  
  }else{  
   return false;
@@ -59,7 +59,7 @@ var mapbig = (x, y) => {
 var connect = () => {
   socket && socket.close();
   alliances = []; reset();
-  socket = io.connect(`http://${global.moo.partyLink}`, { reconnection: false, query: "man=1" });
+  socket = io.connect(`http://${ global.moo.partyLink}`, { reconnection: false, query: "man=1" });
   socket.on("disconnect", () => {
     dump("Disconnected!");
     setTimeout(connect, 2000);
