@@ -30,7 +30,7 @@ var map = (x, y) => {
   for (var i = 0, q = []; i <= 12; i++) {
     i == yl ? q.push(g.join(" ")) : q.push(n);
   }
-  return `X = ${x}, Y = ${y}:\n\`\`\`diff\n${q.join("\n")}\n\`\`\``;
+  return `X = ${x}, Y = ${y}:\n\`\`\`xl\n${q.join("\n")}\n\`\`\``;
 };
 function validIP(inputText){  
  var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;  
@@ -53,7 +53,7 @@ var mapbig = (x, y) => {
   for (var i = 0, q = []; i <= 25; i++) {
     i == yl ? q.push(g.join(" ")) : q.push(n);
   }
-  return `X = ${x}, Y = ${y}:\n\`\`\`diff\n${q.join("\n")}\n\`\`\``;
+  return `X = ${x}, Y = ${y}:\n\`\`\`xl\n${q.join("\n")}\n\`\`\``;
 };
 var connect = () => {
   socket && socket.close();
