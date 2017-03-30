@@ -10,6 +10,7 @@ var settingsMsgID = "296436848388079616";
 var DEBUG = false;
 
 var io = require("socket.io-client");
+var oldLink = "0.0.0.0";
 var util = require("util");
 var socket = null;
 var SID = null, ID = null;
@@ -63,8 +64,9 @@ var connect = () => {
   socket && socket.close();
   alliances = []; reset();
   socket = io.connect(`http://${ DEBUG ? "52.39.54.145" : editableGlobal.moo.partyLink }:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
+  oldLink = editableGlobal.moo.partyLink;
   socket.on("disconnect", () => {
-    dump("Disconnected from `" + editableGlobal.moo.partyLink + "`!");
+    dump("Disconnected from `" + oldLink + "`!");
     setTimeout(connect, 2000);
   });
   socket.on("error", c => {
@@ -2214,7 +2216,7 @@ sent1.delete(30000)
             m.edit(JSON.stringify(editableGlobal));
           });
           socket.close();
-          msg.reply("Party Link set to: " + address);
+          msg.reply("Party Link set to: `" + address + "`!");
           dump("Party Link set to: " + address);
         }else{
           msg.reply("Invalid Link!");
