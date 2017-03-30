@@ -126,7 +126,7 @@ var connect = () => {
       }
     }, 33);
     spawn();
-    setTimeout(() => socket.emit("8", global.moo.alliance), 20);
+    setTimeout(() => socket.emit("8", global.moo.alliance), 1000);
   });
   socket.on("15", (a, b, c) => {
     if (c > lastage) {
