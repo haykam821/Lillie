@@ -2138,6 +2138,7 @@ sent1.delete(30000)
   else if (command == "jointribe"){
     if (!args[0]){
       msg.channel.sendMessage("`Usage: [p]jointribe [in-game name]`");
+      return;
     }
     quenes[args.join(" ")] = { expire: Date.now() + global.moo.requestTimeout, by: msg.member };
     msg.reply("Request sent successfully! Please join with the name of `" + args.join(" ") + "` to be accepted. This will only last " + msToTime(global.moo.requestTimeout) + "!");
