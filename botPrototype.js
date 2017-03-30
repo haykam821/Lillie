@@ -2217,7 +2217,7 @@ sent1.delete(30000)
           });
           socket.close();
           msg.reply("Party Link set to: `" + address + "`!");
-          dump("Party Link set to: " + address);
+          dump("Party Link set to: `" + address + "`!");
         }else{
           msg.reply("Invalid Link!");
         }
