@@ -2169,7 +2169,16 @@ sent1.delete(30000)
       reset();
       return;
     }
-    if (!args[0]) { autohunt = true; msg.reply("Now auto-attacking!"); keys["m"] = 0; return; }
+    if (!args[0]){
+      autohunt = true;
+      msg.reply("Now auto-attacking!");
+      keys["m"] = 0;
+      editableGlobal.moo.autoAttack = autohunt;
+      bot.channels.get(editableGlobalChannel).fetchMessage(editableGlobalMsgID).then((m)=>{
+        m.edit(JSON.stringify(editableGlobal));
+      });
+      return; 
+    }
       autohunt = false;
       keys["m"] = 0;
       for (var j in players) {
