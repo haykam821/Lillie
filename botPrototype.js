@@ -2203,7 +2203,7 @@ sent1.delete(30000)
   }
     
   else if (command == "partylink"){
-    msg.reply("The current link is: http://moomoo.io/?party=" + global.moo.partyLink + " ! Type [p]jointribe [in-game name] and join " + global.moo.alliance + "!");
+    msg.reply("The current link is: http://moomoo.io/?party=" + editableGlobal.moo.partyLink + " ! Type [p]jointribe [in-game name] and join " + global.moo.alliance + "!");
   }
     
   else if (command == "setpartylink"){
