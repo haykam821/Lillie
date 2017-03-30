@@ -1,7 +1,10 @@
-var global = {moo: {logChannel: "296430168141201410", name: "Lillie", alliance: "Nebula", acceptAll: false, requestTimeout: 300000, partyLink: "52.39.54.145"}};
+var global = {moo: {logChannel: "296430168141201410", name: "Lillie", alliance: "Nebula", acceptAll: false, requestTimeout: 300000}};
+var editableGlobal = {moo: {partyLink: "52.39.54.145", autoAttack: true}};
 
 var globalChannel = "296429968555114526";
 var globalMsgID = "296430530575204352";
+var editableGlobalChannel = globalChannel;
+var editableGlobalMsgID = "296851264904626176";
 var settingsChannel = "292523376352821248";
 var settingsMsgID = "296436848388079616";
 var DEBUG = false;
@@ -59,7 +62,7 @@ var mapbig = (x, y) => {
 var connect = () => {
   socket && socket.close();
   alliances = []; reset();
-  socket = io.connect(`http://${ DEBUG ? "52.39.54.145" : global.moo.partyLink }:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
+  socket = io.connect(`http://${ DEBUG ? "52.39.54.145" : editableGlobal.moo.partyLink }:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
   socket.on("disconnect", () => {
     dump("Disconnected!");
     setTimeout(connect, 2000);
@@ -283,6 +286,7 @@ bot.on('ready', () => {
   let st;
   bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {global = JSON.parse(m.content);});
   bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {settings = JSON.parse(m.content);});
+  bot.channels.get(editableGlobalChannel).fetchMessage(editableGlobalMsgID).then((m) => {editableGlobal = JSON.parse(m.content); autohunt = editableGlobal.moo.autoAttack;});
   cycleColors();
   connect();
 });
@@ -298,6 +302,9 @@ bot.on("messageUpdate", (o, n) => {
   }
   if (n.id == settingsMsgID){
     settings = JSON.parse(n.content);
+  }
+  if (n.id == editableGlobalMsgID){
+    editableGlobal = JSON.parse(n.content);
   }
 });
 
@@ -2143,7 +2150,10 @@ sent1.delete(30000)
   }
 
   else if (command == "map"){
-    msg.reply("I am at:\n" + mapbig(me.x, me.y));
+    if (args[0] == "-b"){
+      msg.reply("I am at:\n" + mapbig(me.x, me.y));
+    }else{
+      msg.reply("I am at:\n" + map(me.x, me.y));
     return;
   }
 
@@ -2151,6 +2161,10 @@ sent1.delete(30000)
     if (args[0] && args[0].toLowerCase() == "-disable"){
       msg.reply("Auto-attack disabled!");
       following = autohunt = hunting = null;
+      editableGlobal.moo.autoAttack = autohunt;
+      bot.channels.get(editableGlobalChannel).fetchMessage(editableGlobalMsgID).then((m)=>{
+        m.edit(JSON.stringify(editableGlobal));
+      });
       reset();
       return;
     }
@@ -2184,7 +2198,10 @@ sent1.delete(30000)
       if (permsUsersList[msg.author.id].isAdmin){
         let address = args[0].replace("http://", "").replace("moomoo.io", "").replace("/", "").replace("?party=", "");
         if (validIP(address)){
-          global.moo.partyLink = address;
+          editableGlobal.moo.partyLink = address;
+          bot.channels.get(editableGlobalChannel).fetchMessage(editableGlobalMsgID).then((m)=>{
+            m.edit(JSON.stringify(editableGlobal));
+          });
           socket.close();
           msg.reply("Party Link set to: " + address);
         }else{
