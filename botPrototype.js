@@ -290,7 +290,7 @@ bot.on('ready', () => {
   bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {settings = JSON.parse(m.content);});
   bot.channels.get(editableGlobalChannel).fetchMessage(editableGlobalMsgID).then((m) => {editableGlobal = JSON.parse(m.content); autohunt = editableGlobal.moo.autoAttack;});
   cycleColors();
-  connect();
+  setTimeout(connect, 2000);
 });
 
 bot.on('error', e => {
