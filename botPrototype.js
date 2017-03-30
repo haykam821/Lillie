@@ -27,7 +27,7 @@ var lastkeys = {};
 var jointm = {};
 var reset = () => { keys = {}; lastkeys = {}; };
 var updatels = () => {};
-var me = {x: 0, y: 0, sid: 0, };
+var me = {x: 0, y: 0, sid: 0 };
 var map = (x, y) => {
   var yl = y < 0 ? 0 : y >= 12000 ? 11 : 0 | (y / 1000);
   var n = "- - - - - - - - - - - -", g = n.split(" ");
@@ -170,7 +170,7 @@ var connect = () => {
       cur.visible = true;
       cur.x = a[d+1];
       cur.y = a[d+2];
-      if (autohunt) {
+      if (cur.team != player.team && autohunt) {
         var c = (cur.x-me.x)*(cur.x-me.x) + (cur.y-me.y)*(cur.y-me.y);
         if (c < recd) {
           recd = c;
@@ -284,8 +284,6 @@ bot.on('ready', () => {
   bot.user.setStatus('online');
   bot.user.setGame('Pokémon Moon');
   fs.writeFile('./tempBanned.json', JSON.stringify({}), console.error);
-  let gl;
-  let st;
   bot.channels.get(globalChannel).fetchMessage(globalMsgID).then((m) => {global = JSON.parse(m.content);});
   bot.channels.get(settingsChannel).fetchMessage(settingsMsgID).then((m) => {settings = JSON.parse(m.content);});
   bot.channels.get(editableGlobalChannel).fetchMessage(editableGlobalMsgID).then((m) => {editableGlobal = JSON.parse(m.content); autohunt = editableGlobal.moo.autoAttack;});
