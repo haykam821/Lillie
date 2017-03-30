@@ -2154,6 +2154,7 @@ sent1.delete(30000)
       msg.reply("I am at:\n" + mapbig(me.x, me.y));
     }else{
       msg.reply("I am at:\n" + map(me.x, me.y));
+    }
     return;
   }
 
