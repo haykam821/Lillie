@@ -64,7 +64,7 @@ var connect = () => {
   alliances = []; reset();
   socket = io.connect(`http://${ DEBUG ? "52.39.54.145" : editableGlobal.moo.partyLink }:500${Math.floor(Math.random())}`, { reconnection: false, query: "man=1" });
   socket.on("disconnect", () => {
-    dump("Disconnected!");
+    dump("Disconnected from `" + editableGlobal.moo.partyLink + "`!");
     setTimeout(connect, 2000);
   });
   socket.on("error", c => {
@@ -81,7 +81,7 @@ var connect = () => {
     if (me && a == me.sid && b < 85) { eat(); }
   });
   socket.once("connect", () => {
-    dump("Connected!");
+    dump("Connected to `" + editableGlobal.moo.partyLink + "`!");
     console.log("Connected!");
     var s = 0;
     setInterval(() => {
@@ -2214,6 +2214,7 @@ sent1.delete(30000)
           });
           socket.close();
           msg.reply("Party Link set to: " + address);
+          dump("Party Link set to: " + address);
         }else{
           msg.reply("Invalid Link!");
         }
