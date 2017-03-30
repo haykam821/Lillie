@@ -170,7 +170,7 @@ var connect = () => {
       cur.visible = true;
       cur.x = a[d+1];
       cur.y = a[d+2];
-      if (cur.team != player.team && autohunt) {
+      if (cur.team != me.team && autohunt) {
         var c = (cur.x-me.x)*(cur.x-me.x) + (cur.y-me.y)*(cur.y-me.y);
         if (c < recd) {
           recd = c;
