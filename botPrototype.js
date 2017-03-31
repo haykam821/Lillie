@@ -156,7 +156,7 @@ var connect = () => {
   socket.on("3", (a) => {
     for (var i in players) { players[i].visible = false; }
     var rec = null, recd = Infinity;
-    for (var d = 0; d < a.length; d += 7) {
+    for (var d = 0; d < a.length; d += 8) {
       if (+a[d] == me.sid) {
         var ox = me.x, oy = me.y;
         me.x = a[d+1];
