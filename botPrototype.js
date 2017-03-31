@@ -18,7 +18,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     .on('end', function() {
       client.end();
     });
-);
+});
 function getUserData(id){
   let targetUserProperties = false;
   pg.connect(process.env.DATABASE_URL, function(err, client) {
