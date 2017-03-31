@@ -9,6 +9,80 @@ var settingsChannel = "292523376352821248";
 var settingsMsgID = "296436848388079616";
 var DEBUG = false;
 
+var pg = require("pg");
+pg.defaults.ssl = true;
+pg.connect(process.env.DATABASE_URL, function(err, client) {
+  if (err) throw err;
+  client
+    .query('CREATE TABLE IF NOT EXISTS users(id PRIMARY KEY, points int8, quests int8, civilwars int8, banned bool, mod bool, admin bool, text1 text, text2 text)')
+    .on('end', function() {
+      client.end();
+    });
+);
+function getUserData(id){
+  let targetUserProperties = false;
+  pg.connect(process.env.DATABASE_URL, function(err, client) {
+    if (err) throw err;
+    client
+      .query(`SELECT * FROM users WHERE id = ${id};`)
+      .on('row', function(row) {
+        targetUserProperties = row;
+      })
+      .on('end', function(){
+        if (!targetUserProperties){
+          return -1;
+        }
+        return targetUserProperties;
+      });
+  );
+}
+function insertUserData(id){
+  if (getUserData(id)){
+    return -1;
+  }
+  if (!getUserData(id)){
+  pg.connect(process.env.DATABASE_URL, function(err, client) {
+    if (err) throw err;
+    client
+      .query(`INSERT INTO users VALUES (${id}, 0, 0, 0, false, false, false, '', '');`)
+      .on('end', function(){
+        return 0;
+      });
+  );
+  }
+}
+function updateUserData(id, prop, val){
+  if (!getUserData(id)){
+    return -1;
+  }
+  let string = false;
+  if (prop == "points" || prop == "quests" || prop == "civilwars" || prop == "banned" || prop == "mod" || prop == "admin" || prop == "text1" || prop == "text2"){
+  }else{
+    return -1;
+  }
+  if (typeof val == "string"){
+    string = true;
+  }
+  if (propChange && getUserData(id)){
+  pg.connect(process.env.DATABASE_URL, function(err, client) {
+    if (err) throw err;
+    if (string){
+      client
+        .query(`UPDATE users SET ${prop} = '${val}' WHERE id = ${id};`)
+        .on('end', function(){
+          return 0;
+        });
+    }else{
+      client
+        .query(`UPDATE users SET ${prop} = ${val} WHERE id = ${id};`)
+        .on('end', function(){
+          return 0;
+        });
+    }
+  );
+  }
+}
+
 var io = require("socket.io-client");
 var oldLink = "0.0.0.0";
 var util = require("util");
