@@ -8,7 +8,7 @@ var editableGlobalMsgID = "296851264904626176";
 var settingsChannel = "292523376352821248";
 var settingsMsgID = "296436848388079616";
 var DEBUG = false;
-
+/*
 var pg = require("pg");
 pg.defaults.ssl = true;
 function getUserData(id){
@@ -74,7 +74,7 @@ function updateUserData(id, prop, val){
   });
   }
 }
-
+*/
 var io = require("socket.io-client");
 var oldLink = "0.0.0.0";
 var util = require("util");
@@ -357,6 +357,7 @@ bot.on('ready', () => {
   bot.channels.get(editableGlobalChannel).fetchMessage(editableGlobalMsgID).then((m) => {editableGlobal = JSON.parse(m.content); autohunt = editableGlobal.moo.autoAttack;});
   cycleColors();
   setTimeout(connect, 2000);
+  /*
   pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
   client
@@ -365,6 +366,7 @@ bot.on('ready', () => {
       client.end();
     }).catch((err)=>{console.log(err);});
 });
+*/
 });
 
 bot.on('error', e => {
