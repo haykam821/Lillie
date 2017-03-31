@@ -11,14 +11,6 @@ var DEBUG = false;
 
 var pg = require("pg");
 pg.defaults.ssl = true;
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err) throw err;
-  client
-    .query('CREATE TABLE IF NOT EXISTS users(id PRIMARY KEY, points int8, quests int8, civilwars int8, banned bool, mod bool, admin bool, text1 text, text2 text)')
-    .on('end', function() {
-      client.end();
-    });
-});
 function getUserData(id){
   let targetUserProperties = false;
   pg.connect(process.env.DATABASE_URL, function(err, client) {
@@ -33,7 +25,7 @@ function getUserData(id){
           return -1;
         }
         return targetUserProperties;
-      });
+      }).catch((err)=>{console.log(err);});
   });
 }
 function insertUserData(id){
@@ -47,7 +39,7 @@ function insertUserData(id){
       .query(`INSERT INTO users VALUES (${id}, 0, 0, 0, false, false, false, '', '');`)
       .on('end', function(){
         return 0;
-      });
+      }).catch((err)=>{console.log(err);});
   });
   }
 }
@@ -71,13 +63,13 @@ function updateUserData(id, prop, val){
         .query(`UPDATE users SET ${prop} = '${val}' WHERE id = ${id};`)
         .on('end', function(){
           return 0;
-        });
+        }).catch((err)=>{console.log(err);});
     }else{
       client
         .query(`UPDATE users SET ${prop} = ${val} WHERE id = ${id};`)
         .on('end', function(){
           return 0;
-        });
+        }).catch((err)=>{console.log(err);});
     }
   });
   }
@@ -365,6 +357,14 @@ bot.on('ready', () => {
   bot.channels.get(editableGlobalChannel).fetchMessage(editableGlobalMsgID).then((m) => {editableGlobal = JSON.parse(m.content); autohunt = editableGlobal.moo.autoAttack;});
   cycleColors();
   setTimeout(connect, 2000);
+  pg.connect(process.env.DATABASE_URL, function(err, client) {
+  if (err) throw err;
+  client
+    .query('CREATE TABLE IF NOT EXISTS users(id PRIMARY KEY, points int8, quests int8, civilwars int8, banned bool, mod bool, admin bool, text1 text, text2 text)')
+    .on('end', function() {
+      client.end();
+    }).catch((err)=>{console.log(err);});
+});
 });
 
 bot.on('error', e => {
