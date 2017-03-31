@@ -34,7 +34,7 @@ function getUserData(id){
         }
         return targetUserProperties;
       });
-  );
+  });
 }
 function insertUserData(id){
   if (getUserData(id)){
@@ -48,7 +48,7 @@ function insertUserData(id){
       .on('end', function(){
         return 0;
       });
-  );
+  });
   }
 }
 function updateUserData(id, prop, val){
@@ -79,7 +79,7 @@ function updateUserData(id, prop, val){
           return 0;
         });
     }
-  );
+  });
   }
 }
 
