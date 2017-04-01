@@ -1927,12 +1927,12 @@ bot.on("message", msg => {
     let a = [0, 0, 0, 0, 0, 0, 0, 0];
     let regSmasher = false;
     let limit = 7;
-    if (args[0] = "-smasher" || args[0] = "-landmine" || args[0] = "-spike"){
+    if (args[0] == "-smasher" || args[0] == "-landmine" || args[0] == "-spike"){
       regSmasher = true;
       a = [0, 0, 0, 0];
       limit = 10;
     }
-    if (args[0] = "-autosmasher"){
+    if (args[0] == "-autosmasher"){
       limit = 10;
     }
     for (let i = 0; i < 33; i){
