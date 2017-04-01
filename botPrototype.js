@@ -1925,11 +1925,36 @@ bot.on("message", msg => {
     
   else if (command == "randbuild"){
     let a = [0, 0, 0, 0, 0, 0, 0, 0];
-    for (let i = 0; i < 33; i++){
-      let rand = Math.floor(Math.random()*8);
-      a[rand]++;
+    let regSmasher = false;
+    let limit = 7;
+    if (args[0] = "-smasher" || args[0] = "-landmine" || args[0] = "-spike"){
+      regSmasher = true;
+      a = [0, 0, 0, 0];
+      limit = 10;
     }
-    msg.channel.sendMessage(`Random build: \`${a[0]}/${a[1]}/${a[2]}/${a[3]}/${a[4]}/${a[5]}/${a[6]}/${a[7]}\``);
+    if (args[0] = "-autosmasher"){
+      limit = 10;
+    }
+    for (let i = 0; i < 33; i){
+      if (!regSmasher){
+        let rand = Math.floor(Math.random()*8);
+        if (a[rand] < limit){
+          a[rand]++;
+          i++;
+        }
+      }else{
+        let rand = Math.floor(Math.random()*4);
+        if (a[rand] < limit){
+          a[rand]++;
+          i++;
+        }
+      }
+    }
+    if (!regSmasher){
+      msg.channel.sendMessage(`Random build: \`${a[0]}/${a[1]}/${a[2]}/${a[3]}/${a[4]}/${a[5]}/${a[6]}/${a[7]}\``);
+    }else{
+      msg.channel.sendMessage(`Random build: \`${a[0]}/${a[1]}/${a[2]}/${a[3]}\``);
+    }
   }
 
   //Anti-raid protection
