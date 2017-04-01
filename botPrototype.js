@@ -1165,7 +1165,7 @@ bot.on("message", msg => {
         if (numMsgs > 99){
           msg.channel.bulkDelete(100).then(()=>{
             if (numMsgs == 0){
-              msg.channel.sendMessage("Pruned ${args[0]} messages successfully!");
+              msg.channel.sendMessage("Pruned " + args[0] + " messages successfully!");
             }
           });;
           numMsgs -= 100;
