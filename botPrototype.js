@@ -192,6 +192,7 @@ var connect = () => {
       }
     }, 33);
     spawn();
+    
     setTimeout(() => socket.emit("8", global.moo.alliance), 1000);
   });
   socket.on("15", (a, b, c) => {
@@ -1920,6 +1921,15 @@ bot.on("message", msg => {
       msg.channel.sendMessage("Added role " + msg.guild.roles.get(targetRole.toString()) + " to: " + added + "!");
     }
     commandUsed = true;
+  }
+    
+  else if (command == "randbuild"){
+    let a = [0, 0, 0, 0, 0, 0, 0, 0];
+    for (let i = 0; i < 33; i++){
+      let rand = Math.floor(Math.random()*8);
+      a[rand]++;
+    }
+    msg.channel.sendMessage(`Random build: \`${a[0]}/${a[1]}/${a[2]}/${a[3]}/${a[4]}/${a[5]}/${a[6]}/${a[7]}\``);
   }
 
   //Anti-raid protection
