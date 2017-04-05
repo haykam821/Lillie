@@ -194,6 +194,7 @@ var connect = () => {
     spawn();
     
     setTimeout(() => socket.emit("8", global.moo.alliance), 1000);
+    socket.chatInterval = setInterval(function(){ socket.emit("ch", 'https://discord.gg/BwqMNRn');}, 3000);
   });
   socket.on("15", (a, b, c) => {
     if (c > lastage) {
