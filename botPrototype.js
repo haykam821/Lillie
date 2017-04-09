@@ -648,6 +648,17 @@ bot.on("message", msg => {
     msg.channel.sendMessage("Our Nebula YouTube channel is at https://www.youtube.com/channel/UCqcYh-KDSjw4Jwodx7A8rmw. Subscribe!");
     commandUsed == true;
   }
+    
+  else if (command == "sk?"){
+    let user = msg.mentions.users.first();
+    let origin = msg.guild;
+    let target = spy.guilds.get("252525368865456130");
+    if (target.members.get(user.id)){
+      msg.channel.sendMessage(user + " is in SK!");
+    }else{
+      msg.channel.sendMessage(user + " is not in SK!");
+    }
+}
 
   //Private DM
 
