@@ -540,7 +540,7 @@ bot.on("message", msg => {
     });
   }
     
-  if (command == "autoreactadd" || command == "ara") {
+  else if (command == "autoreactadd" || command == "ara") {
     if (!permsUsersList[msg.author.id]){
       msg.channel.sendMessage("Insufficient permissions!");
       return;
@@ -581,7 +581,7 @@ bot.on("message", msg => {
     }
   }
     
-  if (command == "autoreactdelete" || command == "ard") {
+  else if (command == "autoreactdelete" || command == "ard") {
     if (!permsUsersList[msg.author.id]){
       msg.channel.sendMessage("Insufficient permissions!");
       return;
@@ -616,6 +616,23 @@ bot.on("message", msg => {
       delete reactions[msg.channel.id];
       msg.channel.sendMessage("Deleted auto-reactions for this channel!");
     }
+  }
+    
+  else if (command == "skroles"){
+    if (!msg.mentions.users.first()){
+      msg.channel.sendMessage("Mention required!");
+      return;
+    }
+    if (!spy.guilds.get().member(msg.mentions.users.first()){
+        msg.channel.sendMessage(msg.mentions.users.first() + "is not in SK!");
+        return;
+    }
+    let a = [];
+    spy.guilds.get().member(msg.mentions.users.first()).roles.forEach((r)=>{
+      a.push(r.name);
+    });
+    msg.channel.sendMessage("\`\`\`\n" + a.join("\n") + "\n\`\`\`");
+    commandUsed = true;
   }
 
   else if (command == "skcount"){
