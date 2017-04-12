@@ -623,7 +623,7 @@ bot.on("message", msg => {
       msg.channel.sendMessage("Mention required!");
       return;
     }
-    if (!spy.guilds.get("252525368865456130").member(msg.mentions.users.first()){
+    if (!spy.guilds.get("252525368865456130").member(msg.mentions.users.first())){
         msg.channel.sendMessage(msg.mentions.users.first() + "is not in SK!");
         return;
     }
