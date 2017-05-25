@@ -403,7 +403,7 @@ bot.on("guildMemberAdd", (member) => {
   }
   bot.user.fetchProfile(member.id).catch(function(err){console.log(err);});
   if (member.guild.id == "284433301945581589"){
-    let nickname = member.user.username.toString().replace(/❂/gi, 'o');
+    let nickname = member.user.username.toString().replace(/❂/gi, '🌌');
     member.setNickname("🌌 " + nickname).catch((err)=>{console.log(err);});
   }
   bot.users.get(member.id).sendMessage("Welcome!");
