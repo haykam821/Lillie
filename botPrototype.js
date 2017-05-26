@@ -1189,20 +1189,24 @@ bot.on("message", msg => {
       msg.channel.sendMessage("`Usage: [p]prune [number]`");
       return;
     }
+    let msgOnce = false;
     if (args[0] > 99){
       let numMsgs = parseInt(args[0]) + 1;
       while (numMsgs > 0){
         if (numMsgs > 99){
           msg.channel.bulkDelete(100).then(()=>{
             if (numMsgs == 0){
-              msg.channel.sendMessage("Pruned " + args[0] + " messages successfully!");
+              if (!msgOnce){
+                msg.channel.sendMessage("Pruned " + args[0] + " messages successfully!");
+              }
+              msgOnce = true;
             }
           });;
           numMsgs -= 100;
         }else{
           msg.channel.bulkDelete(numMsgs).then(()=>{
-            if (numMsgs == 0){
-              msg.channel.sendMessage("Pruned ${args[0]} messages successfully!");
+            if (numMsgs == 0 && !msgOnce){
+              msg.channel.sendMessage(`Pruned ${args[0]} messages successfully!`);
             }
           });
           numMsgs -= numMsgs;
@@ -1210,7 +1214,9 @@ bot.on("message", msg => {
       }
     }else{
       msg.channel.bulkDelete(parseInt(args[0]) + 1).then(()=>{
-         msg.channel.sendMessage("Pruned ${args[0]} messages successfully!");
+        if (!msgOnce){
+         msg.channel.sendMessage(`Pruned ${args[0]} messages successfully!`);
+        }
       });
     }
   }
