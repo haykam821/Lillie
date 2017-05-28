@@ -544,7 +544,7 @@ bot.on("message", msg => {
 				}
 				if (msg.embeds.length > 0){
 					echo.embeds = [];
-					msg.embeds.forEach((e) => {
+					msg.embeds[0].forEach((e) => {
 						if (
 							(Object.keys(e))[0] == 'author' ||
 							(Object.keys(e))[0] == 'color' ||
