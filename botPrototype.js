@@ -530,7 +530,7 @@ bot.on("message", msg => {
 		msg.channel.fetchWebhooks().then((webhooks) => {
 			if (webhooks.filter(w => w.owner == bot.user).array().length > 0){
 				let w = webhooks.filter(w => w.owner == bot.user).first();
-				let content = '';
+				let content = '\u200b';
 				let echo = {
 					username: msg.guild.member(msg.author).displayName,
 					avatarURL: msg.author.avatarURL,
