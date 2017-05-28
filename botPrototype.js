@@ -547,7 +547,7 @@ bot.on("message", msg => {
 				}
 				*/
 				w.sendSlackMessage({
-					content: 'test'
+					'content': 'test'
 				});
 			}else{
 				msg.channel.createWebhook('Lillie Echo', 'https://miketendo64.files.wordpress.com/2016/06/1a.png?w=657&h=657').then((w) => {
