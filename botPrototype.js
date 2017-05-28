@@ -530,14 +530,13 @@ bot.on("message", msg => {
 		msg.channel.fetchWebhooks().then((webhooks) => {
 			if (webhooks.filter(w => w.owner == bot.user).array().length > 0){
 				let w = webhooks.filter(w => w.owner == bot.user).first();
+				let content = '';
 				let echo = {
 					username: msg.guild.member(msg.author).displayName,
-					avatar_url: msg.author.avatarURL,
-					text: msg.cleanContent
+					avatarURL: msg.author.avatarURL,
 				};
-				/*
 				if (msg.content){
-					echo.content = msg.cleanContent;
+					content = msg.content;
 				}
 				if (msg.attachments){
 					echo.file = msg.attachments.first();
@@ -545,14 +544,14 @@ bot.on("message", msg => {
 				if (msg.embeds){
 					echo.embeds = msg.embeds;
 				}
-				*/
-				w.sendSlackMessage(echo);
+				w.sendMessage(content, echo);
 			}else{
 				msg.channel.createWebhook('Lillie Echo', 'https://miketendo64.files.wordpress.com/2016/06/1a.png?w=657&h=657').then((w) => {
+					w.edit('Lillie Echo', 'https://miketendo64.files.wordpress.com/2016/06/1a.png?w=657&h=657');
 					msg.channel.sendMessage('Webhook set up successfully! Echo is now ready to go!');
 				}).catch((err) => {
-          msg.channel.sendMessage('Error! Webhook setup failed!');
-        });
+					msg.channel.sendMessage('Webhook Creation Error!');
+				});
 			}
 		});
 	}
