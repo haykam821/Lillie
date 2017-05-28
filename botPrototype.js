@@ -547,8 +547,6 @@ bot.on("message", msg => {
 				}
 				*/
 				w.sendSlackMessage({
-					username: msg.guild.member(msg.author).displayName,
-					avatar_url: msg.author.avatarURL,
 					content: 'test'
 				});
 			}else{
