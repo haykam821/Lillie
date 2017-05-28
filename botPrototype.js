@@ -533,7 +533,7 @@ bot.on("message", msg => {
 				let echo = {
 					username: msg.guild.member(msg.author).displayName,
 					avatar_url: msg.author.avatarURL,
-					content: 'test'
+					text: msg.cleanContent
 				};
 				/*
 				if (msg.content){
@@ -546,16 +546,7 @@ bot.on("message", msg => {
 					echo.embeds = msg.embeds;
 				}
 				*/
-				w.sendSlackMessage({
-  'username': 'Wumpus',
-  'attachments': [{
-    'pretext': 'this looks pretty cool',
-    'color': '#F0F',
-    'footer_icon': 'http://snek.s3.amazonaws.com/topSnek.png',
-    'footer': 'Powered by sneks',
-    'ts': Date.now() / 1000
-  }]
-});
+				w.sendSlackMessage(echo);
 			}else{
 				msg.channel.createWebhook('Lillie Echo', 'https://miketendo64.files.wordpress.com/2016/06/1a.png?w=657&h=657').then((w) => {
 					msg.channel.sendMessage('Webhook set up successfully! Echo is now ready to go!');
