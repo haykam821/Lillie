@@ -546,15 +546,15 @@ bot.on("message", msg => {
 					echo.embeds = [];
 					msg.embeds.forEach((e) => {
 						if (
-							Object.keys(e)[0] == 'author' ||
-							Object.keys(e)[0] == 'color' ||
-							Object.keys(e)[0] == 'description' ||
-							Object.keys(e)[0] == 'fields' ||
-							Object.keys(e)[0] == 'footer' ||
-							Object.keys(e)[0] == 'image' ||
-							Object.keys(e)[0] == 'thumbnail' ||
-							Object.keys(e)[0] == 'title' ||
-							Object.keys(e)[0] == 'url'
+							(Object.keys(e))[0] == 'author' ||
+							(Object.keys(e))[0] == 'color' ||
+							(Object.keys(e))[0] == 'description' ||
+							(Object.keys(e))[0] == 'fields' ||
+							(Object.keys(e))[0] == 'footer' ||
+							(Object.keys(e))[0] == 'image' ||
+							(Object.keys(e))[0] == 'thumbnail' ||
+							(Object.keys(e))[0] == 'title' ||
+							(Object.keys(e))[0] == 'url'
 						){
 							echo.embeds.push(e);
 						}
