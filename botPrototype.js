@@ -534,17 +534,33 @@ bot.on("message", msg => {
 				let echo = {
 					username: msg.guild.member(msg.author).displayName,
 					avatarURL: msg.author.avatarURL,
+					disableEveryone: true
 				};
 				if (msg.content){
 					content = msg.content;
 				}
 				if (msg.attachments){
-					echo.file = msg.attachments.first();
+					echo.file = msg.attachments.first().url;
 				}
 				if (msg.embeds){
-					echo.embeds = msg.embeds;
+					echo.embeds = [];
+					msg.embeds.forEach((e) => {
+						if (
+							Object.keys(e)[0] == 'author' ||
+							Object.keys(e)[0] == 'color' ||
+							Object.keys(e)[0] == 'description' ||
+							Object.keys(e)[0] == 'fields' ||
+							Object.keys(e)[0] == 'footer' ||
+							Object.keys(e)[0] == 'image' ||
+							Object.keys(e)[0] == 'thumbnail' ||
+							Object.keys(e)[0] == 'title' ||
+							Object.keys(e)[0] == 'url'
+						){
+							echo.embeds.push(e);
+						}
+					});
 				}
-				w.sendMessage(content, echo);
+				w.send(content, echo);
 			}else{
 				msg.channel.createWebhook('Lillie Echo', 'https://miketendo64.files.wordpress.com/2016/06/1a.png?w=657&h=657').then((w) => {
 					w.edit('Lillie Echo', 'https://miketendo64.files.wordpress.com/2016/06/1a.png?w=657&h=657');
