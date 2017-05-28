@@ -544,19 +544,19 @@ bot.on("message", msg => {
 				}
 				if (msg.embeds.length > 0){
 					echo.embeds = [];
-					msg.embeds[0].forEach((e) => {
+					Object.keys(msg.embeds[0]).forEach((k) => {
 						if (
-							(Object.keys(e))[0] == 'author' ||
-							(Object.keys(e))[0] == 'color' ||
-							(Object.keys(e))[0] == 'description' ||
-							(Object.keys(e))[0] == 'fields' ||
-							(Object.keys(e))[0] == 'footer' ||
-							(Object.keys(e))[0] == 'image' ||
-							(Object.keys(e))[0] == 'thumbnail' ||
-							(Object.keys(e))[0] == 'title' ||
-							(Object.keys(e))[0] == 'url'
+							k == 'author' ||
+							k == 'color' ||
+							k == 'description' ||
+							k == 'fields' ||
+							k == 'footer' ||
+							k == 'image' ||
+							k == 'thumbnail' ||
+							k == 'title' ||
+							k == 'url'
 						){
-							echo.embeds.push(e);
+							echo.embeds.push(msg.embeds[0][k]);
 						}
 					});
 				}
