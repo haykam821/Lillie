@@ -556,7 +556,7 @@ bot.on("message", msg => {
 							k == 'title' ||
 							k == 'url'
 						){
-							echo.embeds.push(msg.embeds[0][k]);
+							echo.embeds[0][k] = msg.embeds[0][k];
 						}
 					});
 				}
