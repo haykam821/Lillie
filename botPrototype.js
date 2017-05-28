@@ -532,10 +532,12 @@ bot.on("message", msg => {
 				let w = webhooks.filter(w => w.owner == bot.user).first();
 				let echo = {
 					username: msg.guild.member(msg.author).displayName,
-					avatar_url: msg.author.avatarURL
+					avatar_url: msg.author.avatarURL,
+					content: 'test'
 				};
+				/*
 				if (msg.content){
-					echo.content = 'test';
+					echo.content = msg.cleanContent;
 				}
 				if (msg.attachments){
 					echo.file = msg.attachments.first();
@@ -543,6 +545,7 @@ bot.on("message", msg => {
 				if (msg.embeds){
 					echo.embeds = msg.embeds;
 				}
+				*/
 				w.sendSlackMessage(echo);
 			}else{
 				msg.channel.createWebhook('Lillie Echo', 'https://miketendo64.files.wordpress.com/2016/06/1a.png?w=657&h=657').then((w) => {
