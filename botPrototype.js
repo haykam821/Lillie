@@ -519,6 +519,41 @@ bot.on("message", msg => {
       });
     }
   }
+  if (msg.channel && msg.channel.name && msg.channel.name == 'lillie-echo'){
+	if (!msg.guild){
+		return;
+	}
+	if (msg.webhookID){
+		return;
+	}
+	if (msg.channel.permissionsFor(bot.user).has('MANAGE_WEBHOOKS')){
+		msg.channel.fetchWebhooks().then((webhooks) => {
+			if (webhooks.filter(w => w.owner == bot.user).array().length > 0){
+				let w = webhooks.filter(w => w.owner == bot.user).first();
+				let echo = {
+					username: msg.guild.member(msg.author).displayName,
+					avatar_url: msg.author.avatarURL
+				};
+				if (msg.content){
+					echo.content = msg.content;
+				}
+				if (msg.attachments){
+					echo.file = msg.attachments.first();
+				}
+				if (msg.embeds){
+					echo.embeds = msg.embeds;
+				}
+				w.sendSlackMessage(echo);
+			}else{
+				msg.channel.createWebhook('Lillie Echo', 'https://miketendo64.files.wordpress.com/2016/06/1a.png?w=657&h=657').then((w) => {
+					msg.channel.sendMessage('Webhook set up successfully! Echo is now ready to go!');
+				}).catch((err) => {
+          msg.channel.sendMessage('Error! Webhook setup failed!');
+        });
+			}
+		});
+	}
+}
   let prefix = settings["prefix"].value;
   let commandUsed = false;
   let command =  ((msg.content.split(" "))[0]).replace(prefix, '');
