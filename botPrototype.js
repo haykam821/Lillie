@@ -535,7 +535,7 @@ bot.on("message", msg => {
 					avatar_url: msg.author.avatarURL
 				};
 				if (msg.content){
-					echo.content = msg.content;
+					echo.content = 'test';
 				}
 				if (msg.attachments){
 					echo.file = msg.attachments.first();
