@@ -461,7 +461,7 @@ bot.on("message", msg => {
           //bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
         }else{
           //bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id).kick().catch(function(err){console.log(err); bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!"); worked = 0;}).then(() => {
-          if (worked) bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!")});
+          //if (worked) bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!")});
         }
       }
     }
