@@ -397,7 +397,7 @@ bot.on("guildCreate", guild => {
 bot.on("guildMemberAdd", (member) => {
   if (banned[member.id] && member.guild.id != "291055526098239489"){
     if (banned[member.id].permban){
-      bot.guilds.get(member.guild.id).members.get(member.id).kick().catch(function(err){bot.channels.get("288573875057590272").sendMessage(member + " (" + member.id + ")" + " cannot be kicked from " + member.guild.name + " (" + member.guild.id + ")!"); console.log(err);});
+      //bot.guilds.get(member.guild.id).members.get(member.id).kick().catch(function(err){bot.channels.get("288573875057590272").sendMessage(member + " (" + member.id + ")" + " cannot be kicked from " + member.guild.name + " (" + member.guild.id + ")!"); console.log(err);});
       return;
     }
   }
@@ -444,10 +444,10 @@ bot.on("message", msg => {
     if (msg.guild){
     if (banned[msg.author.id].permban){
       if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
-        bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.author.id) + " (" + msg.author.id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
+        //bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.author.id) + " (" + msg.author.id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
       }else{
-        bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.author.id) + " (" + msg.author.id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
-        bot.guilds.get(msg.guild.id).members.get(msg.author.id).kick().catch(function(err){console.log(err);});
+        //bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.author.id) + " (" + msg.author.id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
+        //bot.guilds.get(msg.guild.id).members.get(msg.author.id).kick().catch(function(err){console.log(err);});
       }
     }
     }
@@ -458,9 +458,9 @@ bot.on("message", msg => {
       if (banned[msg.mentions.users.first().id].permban){
         let worked = 1;
         if (!msg.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
-          bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
+          //bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!");
         }else{
-          bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id).kick().catch(function(err){console.log(err); bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!"); worked = 0;}).then(() => {
+          //bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id).kick().catch(function(err){console.log(err); bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " cannot be kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!"); worked = 0;}).then(() => {
           if (worked) bot.channels.get("288573875057590272").sendMessage(bot.guilds.get(msg.guild.id).members.get(msg.mentions.users.first().id) + " (" + msg.mentions.users.first().id + ")" + " has been kicked from " + bot.guilds.get(msg.guild.id).name + " (" + msg.guild.id + ")!")});
         }
       }
