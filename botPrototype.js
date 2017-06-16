@@ -316,7 +316,7 @@ var cycleColors = function(){
   //bot.guilds.get(rainbowRoleGuild[2]).roles.get(rainbowRole[2]).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
   bot.guilds.forEach((g) => {
     g.roles.forEach((r) => {
-      if (r.name.toLower() === "lillie-rainbow"){
+      if (r.name.toLowerCase() === "lillie-rainbow"){
         r.setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
       }
     });
