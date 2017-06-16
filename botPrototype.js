@@ -290,7 +290,7 @@ var connect = () => {
 var leave = true;
 
 //let rainbowRoleGuild = ["284433301945581589", "317083101815898113"];
-/let rainbowRole = ["284906292341112832", "317761554789695489"];
+//let rainbowRole = ["284906292341112832", "317761554789695489"];
 let rainbowColors = ["#FF0000", "#FF4400", "#FF8800", "#FFC400", "#FFFF00", "#80FF00", "#00FF00", "#00ff80", "#00FFFF", "#0080FF", "#0000FF", "#8800FF", "#FF00FF", "#FF0080"];
 let colorChangeTime = 2500;
 let colorIndex = 0;
