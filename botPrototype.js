@@ -289,8 +289,8 @@ var connect = () => {
 
 var leave = true;
 
-let rainbowRoleGuild = ["284433301945581589", "317083101815898113"];
-let rainbowRole = ["284906292341112832", "317761554789695489"];
+//let rainbowRoleGuild = ["284433301945581589", "317083101815898113"];
+/let rainbowRole = ["284906292341112832", "317761554789695489"];
 let rainbowColors = ["#FF0000", "#FF4400", "#FF8800", "#FFC400", "#FFFF00", "#80FF00", "#00FF00", "#00ff80", "#00FFFF", "#0080FF", "#0000FF", "#8800FF", "#FF00FF", "#FF0080"];
 let colorChangeTime = 2500;
 let colorIndex = 0;
@@ -311,9 +311,16 @@ var cycleColors = function(){
   }else{
     colorIndex++;
   }
-  bot.guilds.get(rainbowRoleGuild[0]).roles.get(rainbowRole[0]).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
-  bot.guilds.get(rainbowRoleGuild[1]).roles.get(rainbowRole[1]).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
+  //bot.guilds.get(rainbowRoleGuild[0]).roles.get(rainbowRole[0]).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
+  //bot.guilds.get(rainbowRoleGuild[1]).roles.get(rainbowRole[1]).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
   //bot.guilds.get(rainbowRoleGuild[2]).roles.get(rainbowRole[2]).setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
+  bot.guilds.forEach((g) => {
+    g.roles.forEach((r) => {
+      if (r.name.toLower() === "lillie-rainbow"){
+        r.setColor(rainbowColors[colorIndex]).catch((err) => {console.log(err);});
+      }
+    });
+  });
   setTimeout(cycleColors, colorChangeTime);
   return 0;
 }
