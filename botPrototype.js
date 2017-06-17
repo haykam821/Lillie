@@ -544,7 +544,7 @@ bot.on("message", msg => {
 					disableEveryone: true
 				};
 				if (msg.content){
-					content = msg.content;
+					content = msg.cleanContent;
 				}
 				if (msg.attachments.array().length > 0){
 					//echo.file = {attachment: msg.attachments.first().url, name: msg.attachments.first().filename};
