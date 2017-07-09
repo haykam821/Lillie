@@ -7,7 +7,9 @@ var editableGlobalChannel = globalChannel;
 var editableGlobalMsgID = "296851264904626176";
 var settingsChannel = "292523376352821248";
 var settingsMsgID = "296436848388079616";
+let bagResponseIDs = ["197592250354499584", "227447542911074304"];
 var DEBUG = false;
+
 /*
 var pg = require("pg");
 pg.defaults.ssl = true;
@@ -483,8 +485,8 @@ bot.on("message", msg => {
   if ((msg.content.length < settings["minmsglength"].value) && (!msg.author.bot)){
     msg.delete(settings["minmsgdeletetime"].value);
   }
-  if (msg.author.id == "197592250354499584" && (msg.content.toLowerCase().includes("pew"))){
-    msg.channel.sendMessage(bot.users.get("197592250354499584") + "**, GET IN THE BAG!!!**").then((sent) => {
+  if (bagResponseIDs.indexOf(msg.author.id) > -1 && (msg.content.toLowerCase().includes("pew"))){
+    msg.channel.sendMessage(bot.users.get(msg.author) + "**, GET IN THE BAG!!!**").then((sent) => {
       //sent.delete(15000);
     });
     bagCounter++;
