@@ -84,7 +84,7 @@ var alliances = [];
 var quenes = {};
 var x = 0, y = 0;
 var spawn = () => { socket.emit("1", { name: global.moo.name }); };
-var dump = (content) => {bot.channels.get(global.moo.logChannel).sendMessage(content).catch((err)=>{console.err(err);})};
+var dump = (content) => {bot.channels.get(global.moo.logChannel).sendMessage(content.replace(/@/g, "@\u200b")).catch((err)=>{console.error(err);})};
 var players = [], lastage = 1;
 var foodit = 0;
 var following = null, hunting = null, autohunt = false;
