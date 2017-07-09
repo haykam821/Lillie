@@ -486,7 +486,7 @@ bot.on("message", msg => {
     msg.delete(settings["minmsgdeletetime"].value);
   }
   if (bagResponseIDs.indexOf(msg.author.id) > -1 && (msg.content.toLowerCase().includes("pew"))){
-    msg.channel.sendMessage(bot.users.get(msg.author) + "**, GET IN THE BAG!!!**").then((sent) => {
+    msg.channel.sendMessage("**" + msg.author + ", GET IN THE BAG!!!**").then((sent) => {
       //sent.delete(15000);
     });
     bagCounter++;
