@@ -731,6 +731,9 @@ bot.on("message", msg => {
     
   else if (command == "sk?"){
     let user = msg.mentions.users.first();
+    if (!user){
+    	msg.channel.sendMessage("Please specify a user!");
+    }
     let origin = msg.guild;
     let target = spy.guilds.get("252525368865456130");
     if (target.members.get(user.id)){
