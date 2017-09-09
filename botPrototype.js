@@ -548,9 +548,14 @@ bot.on("message", msg => {
 				if (msg.content){
 					content = msg.cleanContent;
 				}
-				if (msg.attachments.array().length > 0){
-					echo.files = [msg.attachments.first().url];
-				}
+				let attachmentsArray = msg.attachments.array();
+					let attachmentsLength = attachmentsArray.length;
+					if (attachmentsLength > 0){
+						echo.files = [];
+						attachmentsArray.forEach((a) => {
+							echo.files.push(a.url);
+						});
+					}
 				if (msg.embeds.length > 0){
 					echo.embeds = [];
 					echo.embeds[0] = {};
