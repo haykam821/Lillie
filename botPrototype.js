@@ -549,7 +549,7 @@ bot.on("message", msg => {
 					content = msg.cleanContent;
 				}
 				if (msg.attachments.array().length > 0){
-					echo.files = [{file: msg.attachments.first().url, name: msg.attachments.first().filename}];
+					echo.files = [msg.attachments.first().url];
 				}
 				if (msg.embeds.length > 0){
 					echo.embeds = [];
