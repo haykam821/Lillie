@@ -542,14 +542,14 @@ bot.on("message", msg => {
 				let content = '';
 				let echo = {
 					username: msg.guild.member(msg.author).displayName,
-					avatarURL: msg.author.avatarURL,
+					avatarURL: avatarURL: msg.author.avatar ? `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.png?size=256` : "http://i.imgur.com/hQJTVfD.png",
 					disableEveryone: true
 				};
 				if (msg.content){
 					content = msg.cleanContent;
 				}
 				if (msg.attachments.array().length > 0){
-					//echo.file = {attachment: msg.attachments.first().url, name: msg.attachments.first().filename};
+					echo.files = [{file: msg.attachments.first().url, name: msg.attachments.first().filename}];
 				}
 				if (msg.embeds.length > 0){
 					echo.embeds = [];
