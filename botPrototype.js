@@ -542,7 +542,7 @@ bot.on("message", msg => {
 				let content = '';
 				let echo = {
 					username: msg.guild.member(msg.author).displayName,
-					avatarURL: avatarURL: msg.author.avatar ? `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.png?size=256` : "http://i.imgur.com/hQJTVfD.png",
+					avatarURL: (avatarURL: msg.author.avatar ? `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.png?size=256` : "http://i.imgur.com/hQJTVfD.png"),
 					disableEveryone: true
 				};
 				if (msg.content){
